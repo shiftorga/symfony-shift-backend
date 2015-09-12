@@ -12,6 +12,7 @@ function getDashboardTitle()
  */
 function get_dashboard()
 {
+    require_once realpath(__DIR__ . '/../controller/api.php');
     $shifts = getAllShifts();
 
     $viewData = array(
@@ -68,6 +69,7 @@ function get_dashboard()
                 'title' => _("News"), 'body' => getAllNewsList()),
             BLOCK_TYPE_PANEL
         ),
+        'api_shifts_link' => api_link('shifts'),
     );
 
     return  dashboardView($viewData);

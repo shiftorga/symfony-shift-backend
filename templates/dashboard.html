@@ -13,6 +13,95 @@
     </div>
 </div>
 
+<div class="row google">
+    <div class="google-container" id="google-container">
+
+    </div>
+</div>
+
+<script type="application/javascript">
+    var LatLngList = [], marker_ = [], infowindow_ = [], map;
+    jQuery(function ($) {
+        initEmptyCard();
+
+        showUpcomingShifts();
+    });
+
+    function initEmptyCard() {
+        var latitude = 51;
+        var longitude = 10;
+        var LatLngList = new Array();
+        var home = new google.maps.LatLng(latitude,longitude);
+        var options = {
+            center: home,
+            zoom: 5,
+            mapTypeId: google.maps.MapTypeId.HYBRID
+        };
+        map = new google.maps.Map(document.getElementById("google-container"),options);
+    }
+
+    function showUpcomingShifts() {
+        var url = "%api_shifts_link%";
+        jQuery.support.cors = true;
+        $.ajax({
+            url: url,
+            dataType: "json",
+            error:function(xhr, status, errorThrown) {
+                console.log(errorThrown+'\n'+status+'\n'+xhr.statusText);
+            },
+            success: function(o){
+                displayShifts(o);
+            }
+        });
+    }
+
+    function displayShifts(shifts) {
+        var count = 0;
+        for(i in shifts) {
+            if ('' === shifts[i].lat || '' === shifts[i].long) {
+                continue;
+            }
+
+            var coords = new google.maps.LatLng(shifts[i].lat, shifts[i].long);
+            LatLngList[i] = coords;
+            marker_[i] = new google.maps.Marker({
+                position: coords,
+                title: shifts[i].title,
+                map: map,
+                dragable: false
+            });
+            var contentHtml = "<p>" +
+                    "<h2>" + shifts[i].title + "</h2>" +
+                    "<h4>" + shifts[i]['start'] + " - " + shifts[i]['end'] + "</h4>"
+                    "</p>";
+
+            infowindow_[i] = new google.maps.InfoWindow({
+                content : contentHtml,
+                maxWidth: 300
+            });
+
+            google.maps.event.addListener(marker_[i], 'click',
+                    makeInfoWindowEvent(map, infowindow_[i], marker_[i]));
+            count++;
+        }
+
+        if (LatLngList.length != 0){
+            var bounds = new google.maps.LatLngBounds ();
+            for (var i = 0, LtLgLen = LatLngList.length; i < LtLgLen; i++) {
+                bounds.extend (LatLngList[i]);
+            }
+            map.fitBounds (bounds);
+        }
+    }
+
+    function makeInfoWindowEvent(map, infowindow, marker) {
+        return function() {
+            infowindow.open(map, marker);
+        };
+    }
+
+</script>
+
 <div class="row blocks">
     <section class="job-list">
         %jobs_currently_running%
