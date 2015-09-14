@@ -159,9 +159,12 @@ function buildList($shifts)
         $title = $shift['title'] ?: sprintf("%s</br>(%s)", $shift['type'], $shift['location']);
         if (in_array('user_shifts', $privileges)) {
             $shiftLink = shift_link($shift);
-            $title = sprintf("<a href=\"%s\">%s</a>", $shiftLink, $title);
+            $content = sprintf("%s - %s", date('H:i', $shift['start']), date('H:i M.d.Y', $shift['end']));
+            $title = sprintf("<h4><a href=\"%s\">%s</a></h4><p>%s</p>", $shiftLink, $title, $content);
+        } else {
+            $title = sprintf("<span class=\"badge\">%s</span>%s", date('H:i', $shift['start']), $title);
         }
-        $listItems[] = sprintf("<span class=\"badge\">%s</span>%s", date('H:i', $shift['start']), $title);
+        $listItems[] = $title;
     }
 
     return listView($listItems, array('class' => 'list-group', 'item_class' => 'list-group-item'));
@@ -200,7 +203,7 @@ function getAllNewsList()
         $listItems[] = sprintf("%s", $title);
     }
 
-    return listView($listItems, array('class' => 'list-group', 'item_class' => 'list-group-item'));
+    return listView($listItems, array('class' => 'list-group', 'item_class' => 'list-group-item news-list'));
 }
 
 /**

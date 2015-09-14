@@ -7036,6 +7036,46 @@ a#shifts td.collides:focus {
   font-size: 70px;
   text-align: center;
 }
+.news-list,
+.job-list li {
+  margin-bottom: 10px;
+}
+/* makes table elements in User-Edit-Form behave like bootstrap elements
+   (quick-fix! html should get refactored) */
+form.admin-user-form td {
+  clear: both;
+  padding: 0 0 15px 0;
+}
+form.admin-user-form input[type="radio"] {
+  margin-left: 15px;
+}
+form.admin-user-form input[type="radio"]:first-child {
+  margin-left: 0;
+}
+/* Shift filters */
+.selection.user-shift-filter .checkbox {
+  clear: both;
+}
+.shift-selected-filter-list {
+  margin: 0;
+  padding: 0 0 5px 0;
+  list-style: none;
+}
+.shift-selected-filter-list li {
+  position: relative;
+  padding: 0 0 0 11px;
+}
+.shift-selected-filter-list li:before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  content: '- ';
+}
+@media all and (max-width: 768px) {
+  .selection.user-shift-filter {
+    margin-top: 25px;
+  }
+}
 .messages .text-danger {
   color: #fff;
 }
