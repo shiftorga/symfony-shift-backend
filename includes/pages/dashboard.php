@@ -148,17 +148,23 @@ function getCurrentShifts($shifts)
  */
 function buildList($shifts)
 {
+    global $privileges;
+
     if (0 === count($shifts)) {
         return '';
     }
 
-    $list = '<ul class="list-group">';
+    $listItems = array();
     foreach ($shifts as $shift) {
         $title = $shift['title'] ?: sprintf("%s</br>(%s)", $shift['type'], $shift['location']);
-        $list .= sprintf("<li class=\"list-group-item\"><span class=\"badge\">%s</span>%s</li>\n", date('H:i:s', $shift['start']), $title);
+        if (in_array('user_shifts', $privileges)) {
+            $shiftLink = shift_link($shift);
+            $title = sprintf("<a href=\"%s\">%s</a>", $shiftLink, $title);
+        }
+        $listItems[] = sprintf("<span class=\"badge\">%s</span>%s", date('H:i', $shift['start']), $title);
     }
 
-    return $list . '</ul>';
+    return listView($listItems, array('class' => 'list-group', 'item_class' => 'list-group-item'));
 }
 
 /**
@@ -178,18 +184,23 @@ function getAllShifts()
  */
 function getAllNewsList()
 {
+    global $privileges;
     $news = sql_select("SELECT * FROM `News` ORDER BY `Datum`");
 
     if (0 === count($news)) {
         return '';
     }
 
-    $list = '<ul class="list-group">';
+    $listItems = array();
     foreach ($news as $article) {
-        $list .= sprintf("<li class='list-group-item'>%s</li> \n", $article['Betreff']);
+        $title = $article['Betreff'];
+        if (in_array('admin_news', $privileges)) {
+            $title = sprintf("<h4>%s</h4><p>%s</p>", $title, $article['Text']);
+        }
+        $listItems[] = sprintf("%s", $title);
     }
 
-    return $list . '</ul>';
+    return listView($listItems, array('class' => 'list-group', 'item_class' => 'list-group-item'));
 }
 
 /**
