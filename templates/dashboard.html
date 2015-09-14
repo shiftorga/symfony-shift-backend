@@ -19,18 +19,32 @@
     </div>
 </div>
 
-<script type="application/javascript">
-    var LatLngList = [], marker_ = [], infowindow_ = [], map;
-    jQuery(function ($) {
-        initEmptyCard();
+<div class="row blocks">
+    <section class="job-list">
+        %jobs_currently_running%
+    </section>
 
-        showUpcomingShifts();
-    });
+    <section class="job-list">
+        %jobs_now%
+        %jobs_soon%
+    </section>
+    <section class="news">
+        <div class="clock well" id="clockDisplay">??:??:??</div>
+        %news%
+    </section>
+</div>
+
+<script>
+    var LatLngList = [], marker = [], infowindow = [], map, contentHtml;
+    initEmptyCard();
+
+    showUpcomingShifts();
+
+    renderTime();
 
     function initEmptyCard() {
         var latitude = 51;
         var longitude = 10;
-        var LatLngList = new Array();
         var home = new google.maps.LatLng(latitude,longitude);
         var options = {
             center: home,
@@ -56,33 +70,36 @@
     }
 
     function displayShifts(shifts) {
-        var count = 0;
+        contentHtml = [];
         for(i in shifts) {
-            if ('' === shifts[i].lat || '' === shifts[i].long) {
+            var shift = shifts[i];
+            if ('' === shift.lat || '' === shift.long) {
                 continue;
             }
 
-            var coords = new google.maps.LatLng(shifts[i].lat, shifts[i].long);
+            var coords = new google.maps.LatLng(shift.lat, shift.long);
             LatLngList[i] = coords;
-            marker_[i] = new google.maps.Marker({
-                position: coords,
-                title: shifts[i].title,
-                map: map,
-                dragable: false
-            });
-            var contentHtml = "<p>" +
-                    "<h2>" + shifts[i].title + "</h2>" +
-                    "<h4>" + shifts[i]['start'] + " - " + shifts[i]['end'] + "</h4>"
-                    "</p>";
+            if (typeof marker[shift.RID] === 'undefined') {
+                marker[shift.RID] = new google.maps.Marker({
+                    position: coords,
+                    title: shift.locationName,
+                    map: map,
+                    dragable: false
+                });
+                var html = "<section class=\"location-infowindow\">" +
+                        "    <h4>"+ shift.locationName + "</h4>" +
+                        "    <div class=\"location-content-infowindow\"></div>" +
+                        "</section>";
+                html = html + buildHTMLContent(shift);
 
-            infowindow_[i] = new google.maps.InfoWindow({
-                content : contentHtml,
-                maxWidth: 300
-            });
+                contentHtml[shift.RID] = html;
 
-            google.maps.event.addListener(marker_[i], 'click',
-                    makeInfoWindowEvent(map, infowindow_[i], marker_[i]));
-            count++;
+                google.maps.event.addListener(marker[shift.RID], 'click',
+                        openShiftDetails(shift.RID, marker[shift.RID])
+                );
+            } else {
+                contentHtml[shift.RID] = contentHtml[shift.RID] + "<br />" + buildHTMLContent(shift);
+            }
         }
 
         if (LatLngList.length != 0){
@@ -94,30 +111,31 @@
         }
     }
 
-    function makeInfoWindowEvent(map, infowindow, marker) {
+    function openShiftDetails(RID, marker) {
+        var infowindow = new google.maps.InfoWindow({
+            content : contentHtml[RID],
+            maxWidth: 300
+        });
         return function() {
             infowindow.open(map, marker);
         };
     }
 
-</script>
+    function buildHTMLContent(shift) {
+        var startDate = new Date(shift.start * 1000);
+        var endDate = new Date(shift.end * 1000);
+        var startDateString = startDate.getHours() + ':' + ("0" + startDate.getMinutes()).substr(-2);
+        var endDateString = endDate.getHours() + ':' + ("0" + endDate.getMinutes()).substr(-2);
+        var html = "<section class=\"shift-infowindow\">" +
+                "   <h5>" + shift.title + "</h5>" +
+                "   <div class=\"shift-content-infowindow\">" +
+                "       <h6>" + startDateString + " - " + endDateString + "</h6>"
+                "   </div>" +
+                "</section>";
 
-<div class="row blocks">
-    <section class="job-list">
-        %jobs_currently_running%
-    </section>
+        return html;
+    }
 
-    <section class="job-list">
-        %jobs_now%
-        %jobs_soon%
-    </section>
-    <section class="news">
-        <div class="clock well" id="clockDisplay">??:??:??</div>
-        %news%
-    </section>
-</div>
-
-<script>
     function renderTime() {
         var currentTime = new Date();
         var diem = "AM";
@@ -144,6 +162,5 @@
         myClock.textContent = h + ":" + m + ":" + s + " " + diem;
         myClock.innerText = h + ":" + m + ":" + s + " " + diem;
     }
-    renderTime();
-</script>
 
+</script>
