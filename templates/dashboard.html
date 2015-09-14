@@ -112,24 +112,22 @@
     }
 
     function openShiftDetails(RID, marker) {
-        var infowindow = new google.maps.InfoWindow({
-            content : contentHtml[RID],
-            maxWidth: 300
-        });
         return function() {
+            var infowindow = new google.maps.InfoWindow({
+                content : contentHtml[RID],
+                maxWidth: 300
+            });
             infowindow.open(map, marker);
         };
     }
 
     function buildHTMLContent(shift) {
-        var startDate = new Date(shift.start * 1000);
-        var endDate = new Date(shift.end * 1000);
-        var startDateString = startDate.getHours() + ':' + ("0" + startDate.getMinutes()).substr(-2);
-        var endDateString = endDate.getHours() + ':' + ("0" + endDate.getMinutes()).substr(-2);
+        var start = moment.unix(shift.start);
+        var end = moment.unix(shift.end);
         var html = "<section class=\"shift-infowindow\">" +
-                "   <h5>" + shift.title + "</h5>" +
+                "   <h5>" + (null === shift.title ? shift.shiftType : shift.title) + "</h5>" +
                 "   <div class=\"shift-content-infowindow\">" +
-                "       <h6>" + startDateString + " - " + endDateString + "</h6>"
+                "       <h6>" + start.format('HH:mm DD.MM.YYYY') + " - " + end.format('HH:mm DD.MM.YYYY') + "</h6>"
                 "   </div>" +
                 "</section>";
 

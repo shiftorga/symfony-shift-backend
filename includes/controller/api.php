@@ -13,7 +13,7 @@ function api_link($resource)
 function getApiShifts()
 {
     $dbResult = sql_select(
-        "SELECT s.*, r.Name as locationName, r.location, r.lat, r.long FROM `Shifts` s INNER JOIN `Room` r ON r.`RID` = s.`RID` GROUP BY s.`SID` ORDER BY s.`start`"
+        "SELECT s.*, r.Name as locationName, r.location, r.lat, r.long, t.name as shiftType FROM `Shifts` s INNER JOIN `ShiftTypes` t ON s.`shifttype_id` = t.`id` INNER JOIN `Room` r ON r.`RID` = s.`RID` GROUP BY s.`SID` ORDER BY s.`start`"
     );
 
     $currentTime = time();
