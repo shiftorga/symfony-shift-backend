@@ -15,6 +15,7 @@
 
 <div class="row blocks">
     <section class="job-list">
+        %my_next_jobs%
         %jobs_currently_running%
     </section>
 
@@ -35,7 +36,7 @@
         var m = currentTime.getMinutes();
         var s = currentTime.getSeconds();
         setTimeout('renderTime()',1000);
-       
+
         if (s < 10){
             s= "0" + s;
         }
