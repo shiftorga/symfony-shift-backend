@@ -1660,10 +1660,9 @@ msgstr "Beschreibung der Aufgaben."
 #: includes/sys_menu.php:49
 msgid ""
 "Please enter your planned date of departure on your settings page to give us "
-"a feeling for teardown capacities."
+"a feeling for capacities."
 msgstr ""
-"Bitte gib Dein geplantes Abreisedatum an, damit wir ein Gefühl für die Abbau-"
-"Planung bekommen."
+"Bitte gib ein Enddatum deiner Verfügbarkein an, damit wir besser Planen können"
 
 #: includes/sys_menu.php:52
 #, php-format
