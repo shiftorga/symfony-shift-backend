@@ -1623,8 +1623,8 @@ msgid "Occupancy"
 msgstr "Belegung"
 
 #: includes/pages/user_shifts.php:824
-msgid "Use new style if possible"
-msgstr "Wenn möglich neuen Stil verwenden"
+msgid "Calendar-View"
+msgstr "Kalenderansicht"
 
 #: includes/pages/user_shifts.php:826
 msgid "iCal export"
