@@ -18,7 +18,7 @@ function get_dashboard()
         'number_upcoming_shifts' => block(
             array(
                 'description' => _("Angels needed in the next 3 hrs"),
-                'number' => getNumberUpcomingShifts($shifts, 3*60*60)),
+                'number' => countUpcomingNeededAngels($shifts, 3*60*60)),
             BLOCK_TYPE_COUNTER
         ),
         'number_upcoming_night_shifts' => block(
@@ -32,7 +32,7 @@ function get_dashboard()
             array(
                 'description' => _("Angels currently working"),
                 'number' => getCurrentlyWorkingAngels()
-            ),
+                ),
             BLOCK_TYPE_COUNTER
         ),
         'number_hours_worked' => block(
@@ -140,6 +140,32 @@ function getCurrentShifts($shifts)
     });
 }
 
+function countUpcomingNeededAngels($shifts, $withinSeconds)
+{
+    $count = 0;
+    $upcomingShifts = getUpcomingShifts($shifts, $withinSeconds);
+    $ids = array();
+    foreach ($upcomingShifts as $shift) {
+        $ids[] = $shift['SID'];
+    }
+    if (count($ids) === 0) {
+        return $count;
+    }
+
+    $neededInShifts = sql_select(sprintf(
+        "SELECT SUM(nt.count) AS countInShifts FROM NeededAngelTypes nt WHERE nt.shift_id IN ('%s')",
+        implode("', '", $ids)
+    ));
+
+    if (!$neededInShifts) {
+        return $count;
+    }
+    $result = array_shift($neededInShifts);
+    $count = $count + $result['countInShifts'];
+
+    return $count;
+}
+
 /**
  * Creates a li list out of shifts with its titles as labels.
  *
@@ -234,6 +260,9 @@ function countHoursToBeWorked($shifts)
 function getNumberUpcomingNightShifts()
 {
     $nightShifts = getNightShifts();
+    if (count($nightShifts) === 0) {
+        return 0;
+    }
     $upcomingNightShifts = array_filter($nightShifts, function ($shift) {
         $currentTime = time();
 
