@@ -285,7 +285,7 @@ function form_submit($name, $label) {
 /**
  * Rendert ein Formular-Textfeld
  */
-function form_text($name, $label, $value, $disabled = false, $readonly) {
+function form_text($name, $label, $value, $disabled = false, $readonly = false) {
   $disabled = $disabled ? ' disabled="disabled"' : '';
   return form_element(
       $label,

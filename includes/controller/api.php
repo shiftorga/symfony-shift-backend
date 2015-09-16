@@ -12,9 +12,17 @@ function api_link($resource)
 
 function getApiShifts()
 {
-    $dbResult = sql_select(
-        "SELECT s.*, r.Name as locationName, r.location, r.lat, r.long, t.name as shiftType FROM `Shifts` s INNER JOIN `ShiftTypes` t ON s.`shifttype_id` = t.`id` INNER JOIN `Room` r ON r.`RID` = s.`RID` GROUP BY s.`SID` ORDER BY s.`start`"
-    );
+    var_dump($_REQUEST);
+    $pageSize = isset($_REQUEST['per_page']) && preg_match('/\d+/', $_REQUEST['per_page']) ? (int)$_REQUEST['per_page'] : null;
+    $page = isset($_REQUEST['page']) && preg_match('/\d+/', $_REQUEST['page']) ? (int)$_REQUEST['page'] : null;
+    $limit = '';
+    if (null !== $page && null !== $pageSize) {
+        $offset = $page === 1 ? 0 : $page === 2 ? $pageSize : ($page - 1)*$pageSize;
+        $limit = sprintf('LIMIT %s, %s', $pageSize, $offset);
+    }
+
+    $query = "SELECT s.*, r.Name as locationName, r.location, r.lat, r.long, t.name as shiftType FROM `Shifts` s INNER JOIN `ShiftTypes` t ON s.`shifttype_id` = t.`id` INNER JOIN `Room` r ON r.`RID` = s.`RID` GROUP BY s.`SID` ORDER BY s.`start` " . $limit;
+    $dbResult = sql_select($query);
 
     $currentTime = time();
     $result = array();
