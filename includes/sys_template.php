@@ -505,8 +505,8 @@ function listView($listItems, $attributes)
   $list = '';
 
   foreach ($listItems as $label) {
-    $list .= sprintf("<li class=\"%s\">%s</li>", $liClass, $label);
+    $list .= sprintf("<li class=\"%s\">%s</li>", htmlspecialchars($liClass), $label);
   }
 
-  return sprintf("<ul class=\"%s\">%s</ul>", $ulClass, $list);
+  return sprintf("<ul class=\"%s\">%s</ul>", htmlspecialchars($ulClass), $list);
 }

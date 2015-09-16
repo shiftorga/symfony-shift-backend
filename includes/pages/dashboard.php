@@ -156,13 +156,26 @@ function buildList($shifts)
 
     $listItems = array();
     foreach ($shifts as $shift) {
-        $title = $shift['title'] ?: sprintf("%s</br>(%s)", $shift['type'], $shift['location']);
+        $title = $shift['title'] ?: sprintf(
+            "%s</br>(%s)",
+            htmlspecialchars($shift['type']),
+            htmlspecialchars($shift['location'])
+        );
         if (in_array('user_shifts', $privileges)) {
             $shiftLink = shift_link($shift);
             $content = sprintf("%s - %s", date('H:i', $shift['start']), date('H:i M.d.Y', $shift['end']));
-            $title = sprintf("<h4><a href=\"%s\">%s</a></h4><p>%s</p>", $shiftLink, $title, $content);
+            $title = sprintf(
+                "<h4><a href=\"%s\">%s</a></h4><p>%s</p>",
+                htmlspecialchars($shiftLink),
+                $title,
+                htmlspecialchars($content)
+            );
         } else {
-            $title = sprintf("<span class=\"badge\">%s</span>%s", date('H:i', $shift['start']), $title);
+            $title = sprintf(
+                "<span class=\"badge\">%s</span>%s",
+                date('H:i', $shift['start']),
+                htmlspecialchars($title)
+            );
         }
         $listItems[] = $title;
     }
@@ -198,7 +211,7 @@ function getAllNewsList()
     foreach ($news as $article) {
         $title = $article['Betreff'];
         if (in_array('admin_news', $privileges)) {
-            $title = sprintf("<h4>%s</h4><p>%s</p>", $title, $article['Text']);
+            $title = sprintf("<h4>%s</h4><p>%s</p>", htmlspecialchars($title), htmlspecialchars($article['Text']));
         }
         $listItems[] = sprintf("%s", $title);
     }
