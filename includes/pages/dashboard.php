@@ -179,7 +179,7 @@ function getUsersNextJobs($shifts, $withinSeconds)
         $ids[] = $shift['SID'];
     }
     if (count($ids) === 0) {
-        return $count;
+        return 0;
     }
     $sql = sprintf(
         "SELECT s.* FROM ShiftEntry se JOIN Shifts s ON s.SID = se.SID WHERE se.UID = '%s' AND se.SID IN ('%s')",
