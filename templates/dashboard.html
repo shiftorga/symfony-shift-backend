@@ -45,13 +45,13 @@
     function initEmptyCard() {
         var latitude = 51;
         var longitude = 10;
-        var home = new google.maps.LatLng(latitude,longitude);
+        var home = new google.maps.LatLng(latitude, longitude);
         var options = {
             center: home,
             zoom: 5,
             mapTypeId: google.maps.MapTypeId.HYBRID
         };
-        map = new google.maps.Map(document.getElementById("google-container"),options);
+        map = new google.maps.Map(document.getElementById("google-container"), options);
     }
 
     function showUpcomingShifts() {
@@ -60,7 +60,7 @@
         $.ajax({
             url: url,
             dataType: "json",
-            error:function(xhr, status, errorThrown) {
+            error: function(xhr, status, errorThrown) {
                 console.log(errorThrown+'\n'+status+'\n'+xhr.statusText);
             },
             success: function(o){

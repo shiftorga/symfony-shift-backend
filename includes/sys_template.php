@@ -289,7 +289,14 @@ function form_text($name, $label, $value, $disabled = false, $readonly) {
   $disabled = $disabled ? ' disabled="disabled"' : '';
   return form_element(
       $label,
-      '<input class="form-control" id="form_' . $name . '" type="text" name="' . $name . '" value="' . htmlspecialchars($value) . '" ' . $disabled . ($readonly ? 'readonly' : '').'/>',
+      sprintf(
+          '<input class="form-control" id="form_%s" type="text" name="%s" value="%s" %s %s/>',
+          htmlspecialchars($name),
+          htmlspecialchars($name),
+          htmlspecialchars($value),
+          $disabled,
+          ($readonly ? 'readonly' : '')
+      ),
       'form_' . $name
   );
 }

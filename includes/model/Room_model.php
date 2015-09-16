@@ -25,8 +25,8 @@ function Room_create($name, $from_frab, $public, $location, $lat, $long) {
       `location`='" . sql_escape($location) . "',
       `lat`='" . sql_escape($lat) . "',
       `long`='" . sql_escape($long) . "',
-      `FromPentabarf`='" . sql_escape($from_frab ? 'Y' : 'N') . "',
-      `show`='" . sql_escape($public ? 'Y' : 'N') . "',
+      `FromPentabarf`='" . ($from_frab ? 'Y' : 'N') . "',
+      `show`='" . ($public ? 'Y' : 'N') . "',
       `Number`=0");
   if ($result === false)
     return false;

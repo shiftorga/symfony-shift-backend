@@ -194,8 +194,8 @@ var_dump($_REQUEST);
                                     }
 
                                     var place = places.pop();
-                                    var lat = place.geometry.location.G;
-                                    var long = place.geometry.location.K;
+                                    var lat = place.geometry.location.lat();
+                                    var long = place.geometry.location.lng();
 
                                     $(\"input[id='form_lat']\").val(lat);
                                     $(\"input[id='form_long']\").val(long);
