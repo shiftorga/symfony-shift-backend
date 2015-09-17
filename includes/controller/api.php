@@ -17,7 +17,7 @@ function getApiShifts()
     $limit = '';
     if (null !== $page && null !== $pageSize) {
         $offset = $page === 1 ? 0 : $page === 2 ? $pageSize : ($page - 1)*$pageSize;
-        $limit = sprintf('LIMIT %s, %s', $pageSize, $offset);
+        $limit = sprintf('LIMIT %s, %s', $offset, $pageSize);
     }
 
     $query = "SELECT
@@ -31,7 +31,7 @@ function getApiShifts()
               " . $limit;
 
     $dbResult = sql_select($query);
-    $currentTime = time();
+
     return $dbResult;
 }
 
