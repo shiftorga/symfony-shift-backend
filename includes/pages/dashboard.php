@@ -223,9 +223,19 @@ function getAllNewsList()
  */
 function getCurrentlyWorkingAngels()
 {
-    $count = count(sql_select("SELECT id FROM `ShiftEntry`;"));
+    $result = sql_select(
+        "SELECT COUNT(s.SID) as countWorkingAngels, s.SID
+         FROM ShiftEntry se
+         INNER JOIN Shifts s ON se.SID = s.SID
+         WHERE s.`start` < UNIX_TIMESTAMP() AND s.`end` > UNIX_TIMESTAMP()
+         GROUP BY s.SID;"
+    );
 
-    return $count;
+    if (1 !== count($result)) {
+        return 0;
+    }
+
+    return $result[0]['countWorkingAngels'];
 }
 
 /**
