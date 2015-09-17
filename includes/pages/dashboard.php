@@ -269,23 +269,13 @@ function countHoursToBeWorked($shifts)
  */
 function getNumberUpcomingNightShifts()
 {
-    $nightShifts = getNightShifts();
-    if (count($nightShifts) === 0) {
+    $result = sql_select("SELECT COUNT(*) as countUpcomingNightShifts
+                          FROM Shifts
+                          WHERE (FROM_UNIXTIME(start, '%H') > 18 OR FROM_UNIXTIME(end, '%H') < 6)
+                          AND (start > UNIX_TIMESTAMP() OR end > UNIX_TIMESTAMP());");
+    if (1 !== count($result)) {
         return 0;
     }
-    $upcomingNightShifts = array_filter($nightShifts, function ($shift) {
-        $currentTime = time();
 
-        return $shift['start'] >= $currentTime || $shift['end'] >= $currentTime;
-    });
-
-    return count($upcomingNightShifts);
-}
-
-/**
- * @return array
- */
-function getNightShifts()
-{
-    return sql_select("SELECT * FROM Shifts WHERE FROM_UNIXTIME(start, '%H') > 18 OR FROM_UNIXTIME(end, '%H') < 6;");
+    return $result[0]['countUpcomingNightShifts'];
 }
