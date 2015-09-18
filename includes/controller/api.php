@@ -16,7 +16,7 @@ function getApiShifts()
     $page = isset($_REQUEST['page']) && preg_match('/\d+/', $_REQUEST['page']) ? (int)$_REQUEST['page'] : null;
     $limit = '';
     if (null !== $page && null !== $pageSize) {
-        $offset = $page === 1 ? 0 : $page === 2 ? $pageSize : ($page - 1)*$pageSize;
+        $offset = $page === 0 ? 0 :  ($page - 1)*$pageSize;
         $limit = sprintf('LIMIT %s, %s', $offset, $pageSize);
     }
 
