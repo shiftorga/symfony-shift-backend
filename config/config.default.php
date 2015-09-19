@@ -29,6 +29,10 @@ define('CRYPT_ALG', '$6$rounds=5000'); // SHA-512
 
 define('MIN_PASSWORD_LENGTH', 8);
 
+
+// local timezone
+date_default_timezone_set("Europe/Berlin");
+
 // Wenn Engel beim Registrieren oder in ihrem Profil eine T-Shirt Größe angeben sollen, auf true setzen:
 $enable_tshirt_size = false;
 
@@ -38,8 +42,6 @@ $enable_dect = false;
 // Number of shifts to freeload until angel is locked for shift signup.
 $max_freeloadable_shifts = 2;
 
-// local timezone
-date_default_timezone_set("Europe/Berlin");
 
 // Night shifts count double
 $nightshift_bonus = false;
@@ -67,4 +69,5 @@ $config = array(
 );
 
 $enable_frab_import = false;
+$fromMailAddress = 'Engelsystem MUC <noreply@engel-muc.de>';
 ?>
