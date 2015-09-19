@@ -7,3 +7,4 @@ _vimrc_local.vim
 config/config.php
 test/coverage
 .vagrant
+composer.lock
