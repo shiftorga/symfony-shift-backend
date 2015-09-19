@@ -100,7 +100,6 @@ function make_navigation() {
   $menu = array();
   $pages = array(
       "news" => news_title(),
-      "user_meetings" => meetings_title(),
       "user_shifts" => shifts_title(),
       "angeltypes" => angeltypes_title(),
       "user_questions" => questions_title() 
