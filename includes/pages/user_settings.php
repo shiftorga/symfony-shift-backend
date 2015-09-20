@@ -19,7 +19,7 @@ function user_settings() {
   $mail = $user['email'];
   $email_shiftinfo = $user['email_shiftinfo'];
   $jabber = $user['jabber'];
-  $hometown = $user['Hometown'];
+  $kommentar = $user['kommentar'];
   $tshirt_size = $user['Size'];
   $password_hash = "";
   $selected_theme = $user['color'];
@@ -88,8 +88,8 @@ function user_settings() {
       $dect = strip_request_item('dect');
     if (isset($_REQUEST['mobile']))
       $mobile = strip_request_item('mobile');
-    if (isset($_REQUEST['hometown']))
-      $hometown = strip_request_item('hometown');
+    if (isset($_REQUEST['kommentar']))
+      $kommentar = strip_request_item('kommentar');
     if (isset($_REQUEST['gender'])
         && array_key_exists($_REQUEST['gender'], $genders)) {
         $gender = $_REQUEST['gender'];
@@ -110,7 +110,7 @@ function user_settings() {
           `email_shiftinfo`=" . sql_bool($email_shiftinfo) . ",
           `jabber`='" . sql_escape($jabber) . "',
           `Size`='" . sql_escape($tshirt_size) . "',
-          `Hometown`='" . sql_escape($hometown) . "',
+          `kommentar`='" . sql_escape($kommentar) . "',
           `planned_arrival_date`='" . sql_escape($planned_arrival_date) . "',
           `planned_departure_date`=" . sql_null($planned_departure_date) . "
           WHERE `UID`='" . sql_escape($user['UID']) . "'");
@@ -184,7 +184,7 @@ function user_settings() {
                   form_text('mail', _("E-Mail") . ' ' . entry_required(), $mail),
                   form_checkbox('email_shiftinfo', _("Please send me an email if my shifts change"), $email_shiftinfo),
                   form_text('jabber', _("Jabber"), $jabber),
-                  form_text('hometown', _("Hometown"), $hometown),
+                  form_text('kommentar', _("additional Info(Language / Profession)"), $kommentar),
                   $enable_tshirt_size ? form_select('tshirt_size', _("Shirt size"), $tshirt_sizes, $tshirt_size) : '',
                   form_info('', _('Please visit the angeltypes page to manage your angeltypes.')),
                   form_submit('submit', _("Save")) 
