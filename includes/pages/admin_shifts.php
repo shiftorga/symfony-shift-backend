@@ -308,7 +308,7 @@ function admin_shifts() {
           form_info(_("Mode"), ''),
           form_radio('mode', _("Create one shift"), $mode == 'single', 'single'),
           form_radio('mode', _("Create multiple shifts"), $mode == 'multi', 'multi'),
-          form_text('length', _("Length"), ! empty($_REQUEST['length']) ? $_REQUEST['length'] : '120'),
+          form_text('length', _("Length"), ! empty($_REQUEST['length']) ? $_REQUEST['length'] : '360'),
           form_radio('mode', _("Create multiple shifts with variable length"), $mode == 'variable', 'variable'),
           form_text('change_hours', _("Shift change hours"), ! empty($_REQUEST['change_hours']) ? $_REQUEST['change_hours'] : '00, 04, 08, 10, 12, 14, 16, 18, 20, 22'),
           '</div>',
