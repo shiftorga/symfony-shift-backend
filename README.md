@@ -27,12 +27,13 @@ Fehler bitte hier melden: https://github.com/muccc/engelsystem/issues
    * um per Hostname auf die VM zuzugreifen: `vagrant plugin install vagrant-hostmanager`
  * VM starten: `vagrant up`
  * Dependencies installieren: `composer install`
+   * Composer ist in der Vagrant Box bereits installiert
 
 ## Installation eines frischen Engelsystems
 
 ### Mindestvorrausetzungen (bzw. getestet unter):
  * PHP 5.4.x (cgi-fcgi)
- * Composer (in der Vagrant Box bereits installiert)
+ * Composer
  * MySQL-Server 5.5.x
  * Webserver mit PHP-Anbindung, z.B. lighttpd, nginx oder Apache
 
