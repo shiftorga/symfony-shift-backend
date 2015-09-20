@@ -12,7 +12,7 @@ function getDashboardTitle()
  */
 function get_dashboard()
 {
-    $shifts = getAllShifts();
+    $shifts = getAllUpcomingShifts();
 
     $viewData = array(
         'number_upcoming_shifts' => block(
@@ -98,6 +98,8 @@ function getListUpcomingShifts($shifts, $withinSeconds)
 }
 
 /**
+ * Filters the upcoming shifts within a given time.
+ *
  * @param $shifts
  * @param $withinSeconds
  *
@@ -192,9 +194,14 @@ function buildList($shifts)
  *
  * @return array
  */
-function getAllShifts()
+function getAllUpcomingShifts()
 {
-    return sql_select("SELECT s.*, r.Name as location, t.name as type FROM `Shifts` s, `Room` r, `ShiftTypes` t GROUP BY s.`SID` ORDER BY s.`start`");
+    return sql_select(
+        "SELECT s.*, r.Name as location, t.name as type
+         FROM `Shifts` s, `Room` r, `ShiftTypes` t
+         WHERE s.`start` > UNIX_TIMESTAMP() OR s.`end` > UNIX_TIMESTAMP()
+         GROUP BY s.`SID` ORDER BY s.`start`"
+    );
 }
 
 /**
@@ -219,13 +226,25 @@ function getAllNewsList()
 }
 
 /**
+ * Counts the currently working angels by a simple SQL query.
+ *
  * @return int
  */
 function getCurrentlyWorkingAngels()
 {
-    $count = count(sql_select("SELECT id FROM `ShiftEntry`;"));
+    $result = sql_select(
+        "SELECT COUNT(s.SID) as countWorkingAngels, s.SID
+         FROM ShiftEntry se
+         INNER JOIN Shifts s ON se.SID = s.SID
+         WHERE s.`start` < UNIX_TIMESTAMP() AND s.`end` > UNIX_TIMESTAMP()
+         GROUP BY s.SID;"
+    );
 
-    return $count;
+    if (1 !== count($result)) {
+        return 0;
+    }
+
+    return $result[0]['countWorkingAngels'];
 }
 
 /**
@@ -259,23 +278,13 @@ function countHoursToBeWorked($shifts)
  */
 function getNumberUpcomingNightShifts()
 {
-    $nightShifts = getNightShifts();
-    if (count($nightShifts) === 0) {
+    $result = sql_select("SELECT COUNT(*) as countUpcomingNightShifts
+                          FROM Shifts
+                          WHERE (FROM_UNIXTIME(start, '%H') > 18 OR FROM_UNIXTIME(end, '%H') < 6)
+                          AND (start > UNIX_TIMESTAMP() OR end > UNIX_TIMESTAMP());");
+    if (1 !== count($result)) {
         return 0;
     }
-    $upcomingNightShifts = array_filter($nightShifts, function ($shift) {
-        $currentTime = time();
 
-        return $shift['start'] >= $currentTime || $shift['end'] >= $currentTime;
-    });
-
-    return count($upcomingNightShifts);
-}
-
-/**
- * @return array
- */
-function getNightShifts()
-{
-    return sql_select("SELECT * FROM Shifts WHERE FROM_UNIXTIME(start, '%H') > 18 OR FROM_UNIXTIME(end, '%H') < 6;");
+    return $result[0]['countUpcomingNightShifts'];
 }
