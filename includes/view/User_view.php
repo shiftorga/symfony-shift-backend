@@ -45,10 +45,8 @@ function Users_view($users, $order_by, $arrived_count, $active_count, $force_act
   foreach ($users as &$user) {
     $user['Nick'] = User_Nick_render($user);
     $user['Gekommen'] = glyph_bool($user['Gekommen']);
-    $user['got_voucher'] = $user['got_voucher'];
     $user['Aktiv'] = glyph_bool($user['Aktiv']);
     $user['force_active'] = glyph_bool($user['force_active']);
-    $user['Tshirt'] = glyph_bool($user['Tshirt']);
     $user['lastLogIn'] = date(_('m/d/Y h:i a'), $user['lastLogIn']);
     $user['actions'] = table_buttons(array(
         button_glyph(page_link_to('admin_user') . '&id=' . $user['UID'], 'edit', 'btn-xs') 
@@ -57,10 +55,8 @@ function Users_view($users, $order_by, $arrived_count, $active_count, $force_act
   $users[] = array(
       'Nick' => '<strong>' . _('Sum') . '</strong>',
       'Gekommen' => $arrived_count,
-      'got_voucher' => $voucher_count,
       'Aktiv' => $active_count,
       'force_active' => $force_active_count,
-      'freeloads' => $freeloads_count,
       'Tshirt' => $tshirts_count,
       'actions' => '<strong>' . count($users) . '</strong>' 
   );
@@ -72,18 +68,15 @@ function Users_view($users, $order_by, $arrived_count, $active_count, $force_act
       )),
       table(array(
           'Nick' => Users_table_header_link('Nick', _('Nick'), $order_by),
-          'Vorname' => Users_table_header_link('Vorname', _('Prename'), $order_by),
+          'Vorname' => Users_table_header_link('Vorname', _('Firstname'), $order_by),
           'Name' => Users_table_header_link('Name', _('Name'), $order_by),
           'gender' => Users_table_header_link('gender', _('Gender'), $order_by),
           'Handy' => Users_table_header_link('Mobile', _('Mobile'), $order_by),
           'Telefon' => Users_table_header_link('Phone', _('Phone'), $order_by),
           'Gekommen' => Users_table_header_link('Gekommen', _('Available'), $order_by),
-          'got_voucher' => Users_table_header_link('got_voucher', _('Voucher'), $order_by),
-          'freeloads' => _('Freeloads'),
           'Aktiv' => Users_table_header_link('Aktiv', _('Active'), $order_by),
           'force_active' => Users_table_header_link('force_active', _('Forced'), $order_by),
-          'Tshirt' => Users_table_header_link('Tshirt', _('T-Shirt'), $order_by),
-          'Size' => Users_table_header_link('Size', _('Size'), $order_by),
+          'kommentar' => Users_table_header_link('kommentar', _('Additional Info'), $order_by),
           'lastLogIn' => Users_table_header_link('lastLogIn', _('Last login'), $order_by),
           'actions' => '' 
       ), $users) 
