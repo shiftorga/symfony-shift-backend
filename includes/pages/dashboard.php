@@ -194,7 +194,7 @@ function buildList($shifts)
  */
 function getAllShifts()
 {
-    return sql_select("SELECT s.*, r.Name as location, t.name as type FROM `Shifts` s, `Room` r, `ShiftTypes` t GROUP BY s.`SID` ORDER BY s.`start`");
+    return sql_select("SELECT s.*, r.name AS location, t.name AS type FROM `Shifts` s JOIN `ShiftTypes` t ON s.shifttype_id = t.id JOIN `Room` r USING (RID)  GROUP BY s.`SID` ORDER BY s.`start`;");
 }
 
 /**
