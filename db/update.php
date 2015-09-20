@@ -1,10 +1,13 @@
 <?php
 
-require_once realpath(__DIR__ . '/../includes/mysql_provider.php');
+require_once realpath(__DIR__ . '/../includes/sys_log.php');
+require_once realpath(__DIR__ . '/../includes/mysqli_provider.php');
 require_once realpath(__DIR__ . '/../config/config.default.php');
 if(file_exists(realpath(__DIR__ . '/../config/config.php')))
   require_once realpath(__DIR__ . '/../config/config.php');
 sql_connect($config['host'], $config['user'], $config['pw'], $config['db']);
+
+global $sql_connection;
 
 error_reporting(E_ALL | E_NOTICE);
 
