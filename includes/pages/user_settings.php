@@ -37,9 +37,6 @@ function user_settings() {
         $ok = false;
         $msg .= error(_("E-mail address is not correct."), true);
       }
-    } else {
-      $ok = false;
-      $msg .= error(_("Please enter your e-mail."), true);
     }
     
     $email_shiftinfo = isset($_REQUEST['email_shiftinfo']);
@@ -181,7 +178,7 @@ function user_settings() {
                   form_text('tel', _("Phone"), $tel),
                   $enable_dect ? form_text('dect', _("DECT"), $dect) : '',
                   form_text('mobile', _("Mobile"), $mobile),
-                  form_text('mail', _("E-Mail") . ' ' . entry_required(), $mail),
+                  form_text('mail', _("E-Mail"), $mail),
                   form_checkbox('email_shiftinfo', _("Please send me an email if my shifts change"), $email_shiftinfo),
                   form_text('jabber', _("Jabber"), $jabber),
                   form_text('hometown', _("Hometown"), $hometown),

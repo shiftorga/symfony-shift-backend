@@ -63,9 +63,6 @@ function guest_register() {
         $ok = false;
         $msg .= error(_("E-mail address is not correct."), true);
       }
-    } else {
-      $ok = false;
-      $msg .= error(_("Please enter your e-mail."), true);
     }
     
     if (isset($_REQUEST['email_shiftinfo']))
@@ -78,16 +75,7 @@ function guest_register() {
         $msg .= error(_("Please check your jabber account information."), true);
       }
     }
-    
-    if ($enable_tshirt_size) {
-      if (isset($_REQUEST['tshirt_size']) && isset($tshirt_sizes[$_REQUEST['tshirt_size']]) && $_REQUEST['tshirt_size'] != '')
-        $tshirt_size = $_REQUEST['tshirt_size'];
-      else {
-        $ok = false;
-        $msg .= error(_("Please select your shirt size."), true);
-      }
-    }
-    
+
     if (isset($_REQUEST['password']) && strlen($_REQUEST['password']) >= MIN_PASSWORD_LENGTH) {
       if ($_REQUEST['password'] != $_REQUEST['password2']) {
         $ok = false;
@@ -148,7 +136,7 @@ function guest_register() {
           `email_shiftinfo`=" . sql_bool($email_shiftinfo) . ", 
           `jabber`='" . sql_escape($jabber) . "',
           `Size`='" . sql_escape($tshirt_size) . "', 
-          `Passwort`='" . sql_escape($password_hash) . "', 
+          `Passwort`='" . sql_escape($password_hash) . "',
           `kommentar`='" . sql_escape($comment) . "', 
           `Hometown`='" . sql_escape($hometown) . "', 
           `CreateDate`=NOW(), 
@@ -186,17 +174,13 @@ function guest_register() {
                           form_text('nick', _("Nick") . ' ' . entry_required(), $nick) 
                       )),
                       div('col-sm-8', array(
-                          form_email('mail', _("E-Mail") . ' ' . entry_required(), $mail),
-                          form_checkbox('email_shiftinfo', _("Please send me an email if my shifts change"), $email_shiftinfo) 
-                      )) 
+                          form_email('mail', _("E-Mail"), $mail),
+                                               ))
                   )),
                   div('row', array(
                       div('col-sm-6', array(
                           form_date('planned_arrival_date', _("Planned begin of availability") . ' ' . entry_required(), $planned_arrival_date, time()) 
-                      )),
-                      div('col-sm-6', array(
-                          $enable_tshirt_size ? form_select('tshirt_size', _("Shirt size") . ' ' . entry_required(), $tshirt_sizes, $tshirt_size) : '' 
-                      )) 
+                      ))
                   )),
                   div('row', array(
                       div('col-sm-6', array(
