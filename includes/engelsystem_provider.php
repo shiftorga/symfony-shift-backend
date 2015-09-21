@@ -76,7 +76,7 @@ require_once realpath(__DIR__ . '/../includes/pages/user_questions.php');
 require_once realpath(__DIR__ . '/../includes/pages/user_settings.php');
 require_once realpath(__DIR__ . '/../includes/pages/user_shifts.php');
 
-require_once realpath(__DIR__ . '/../vendor/parsedown/Parsedown.php');
+require_once realpath(__DIR__ . '/../vendor/erusev/parsedown/Parsedown.php');
 
 if (! defined('PHPUNIT_TESTSUITE')) {
   session_lifetime(24 * 60, preg_replace("/[^a-z0-9-]/", '', md5(__DIR__)));
