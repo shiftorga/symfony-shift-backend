@@ -1,4 +1,6 @@
 <?php
+require_once realpath(__DIR__ . '/../vendor/autoload.php');
+
 require_once realpath(__DIR__ . '/../includes/engelsystem_provider.php');
 
 $free_pages = array(
