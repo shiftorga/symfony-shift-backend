@@ -8,6 +8,13 @@
         "erusev/parsedown": "1.1.0",
         "fxp/composer-asset-plugin": "~1.0",
         "bower-asset/bootstrap-multiselect":"v0.9.13"
+
+    },
+    "extra": {
+        "asset-installer-paths": {
+            "npm-asset-library": "public/assets",
+            "bower-asset-library": "public/assets"
+        }
     }
 
 }
