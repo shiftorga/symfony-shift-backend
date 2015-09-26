@@ -9,3 +9,4 @@ test/coverage
 .vagrant
 /vendor/
 /public/assets/
+/app/cache

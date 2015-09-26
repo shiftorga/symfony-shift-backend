@@ -1,0 +1,3 @@
+engel_app:
+    resource: "@EngelAppBundle/Resources/config/routing.php"
+    prefix:   /

@@ -180,9 +180,9 @@ php::extensions:
       xdebug.remote_enable: 'On'
       xdebug.default_enable: 'On'
       xdebug.remote_connect_back: 'On'
-#  curl: {}
-#  json: {}
-#  intl: {}
+  curl: {}
+  json: {}
+  intl: {}
 #  apc:
 #    package_prefix: php-
 #    settings:
@@ -190,8 +190,8 @@ php::extensions:
 #      apc.stat_ctime: 1
 
 ## cli and fpm php.ini settings
-# php::settings:
-#  Date/date.timezone: Europe/Berlin
+php::settings:
+  Date/date.timezone: Europe/Berlin
 
 ## only fpm php.ini settings
 # php::fpm::settings:
