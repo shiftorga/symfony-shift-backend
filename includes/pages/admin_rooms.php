@@ -75,7 +75,7 @@ function admin_rooms()
                     $ok = false;
                     $msg .= error(_("Please enter a location."));
                 }
-var_dump($_REQUEST);
+
                 if (isset($_REQUEST['lat']) && isset($_REQUEST['long'])) {
                     $lat = $_REQUEST['lat'];
                     $long = $_REQUEST['long'];

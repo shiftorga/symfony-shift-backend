@@ -519,4 +519,27 @@ function ReplaceSmilies($neueckig) {
 
   return $neueckig;
 }
-?>
+
+
+/**
+ * Creates a ul-list with its items. Needs a list of labels, used for the li items.
+ *
+ * The attributes can contain the class (for the ul class) or item_class (class for li element).
+ *
+ * @param array $listItems
+ * @param $attributes
+ *
+ * @return string
+ */
+function listView($listItems, $attributes)
+{
+  $ulClass = isset($attributes['class']) ? $attributes['class'] : '';
+  $liClass = isset($attributes['item_class']) ? $attributes['item_class'] : '';
+  $list = '';
+
+  foreach ($listItems as $label) {
+    $list .= sprintf("<li class=\"%s\">%s</li>", htmlspecialchars($liClass), $label);
+  }
+
+  return sprintf("<ul class=\"%s\">%s</ul>", htmlspecialchars($ulClass), $list);
+}
