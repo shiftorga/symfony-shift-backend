@@ -12,6 +12,8 @@ function getDashboardTitle()
  */
 function get_dashboard()
 {
+    global $privileges;
+
     $shifts = getAllUpcomingShifts();
 
     $viewData = array(
@@ -42,6 +44,9 @@ function get_dashboard()
             ),
             BLOCK_TYPE_COUNTER
         ),
+        'my_next_jobs' => (in_array('user_shifts', $privileges))
+            ? block(array('title' => _("My next jobs"), 'body' => getUsersNextJobs($shifts, 3*60*60)), BLOCK_TYPE_PANEL)
+            : '',
         'jobs_currently_running' => block(
             array(
                 'title' => _("Currently running"),
@@ -166,6 +171,26 @@ function countUpcomingNeededAngels($shifts, $withinSeconds)
     $count = $count + $result['countInShifts'];
 
     return $count;
+}
+
+function getUsersNextJobs($shifts, $withinSeconds)
+{
+    global $user;
+    $ids = array();
+    foreach (getUpcomingShifts($shifts, $withinSeconds) as $shift) {
+        $ids[] = $shift['SID'];
+    }
+    if (count($ids) === 0) {
+        return 0;
+    }
+    $sql = sprintf(
+        "SELECT s.* FROM ShiftEntry se JOIN Shifts s ON s.SID = se.SID WHERE se.UID = '%s' AND se.SID IN ('%s')",
+        $user['UID'],
+        implode("', '", $ids)
+    );
+    $usersShifts = sql_select($sql);
+
+    return buildList($usersShifts);
 }
 
 /**
