@@ -13,6 +13,12 @@
     </div>
 </div>
 
+<div class="row google">
+    <div class="google-container" id="google-container">
+
+    </div>
+</div>
+
 <div class="row blocks">
     <section class="job-list">
         %my_next_jobs%
@@ -30,6 +36,105 @@
 </div>
 
 <script>
+    var LatLngList = [], marker = [], infowindow = [], map, contentHtml;
+    initEmptyCard();
+
+    showUpcomingShifts();
+
+    renderTime();
+
+    function initEmptyCard() {
+        var latitude = 51;
+        var longitude = 10;
+        var home = new google.maps.LatLng(latitude, longitude);
+        var options = {
+            center: home,
+            zoom: 5,
+            mapTypeId: google.maps.MapTypeId.HYBRID
+        };
+        map = new google.maps.Map(document.getElementById("google-container"), options);
+    }
+
+    function showUpcomingShifts() {
+        var url = "%api_shifts_link%";
+        jQuery.support.cors = true;
+        $.ajax({
+            url: url,
+            dataType: "json",
+            error: function(xhr, status, errorThrown) {
+                console.log(errorThrown+'\n'+status+'\n'+xhr.statusText);
+            },
+            success: function(o){
+                displayShifts(o);
+            }
+        });
+    }
+
+    function displayShifts(shifts) {
+        contentHtml = [];
+        for(i in shifts) {
+            var shift = shifts[i];
+            if ('' === shift.lat || '' === shift.long) {
+                continue;
+            }
+
+            var coords = new google.maps.LatLng(shift.lat, shift.long);
+            LatLngList[i] = coords;
+            if (typeof marker[shift.RID] === 'undefined') {
+                marker[shift.RID] = new google.maps.Marker({
+                    position: coords,
+                    title: shift.locationName,
+                    map: map,
+                    dragable: false
+                });
+                var html = "<section class=\"location-infowindow\">" +
+                        "    <h4>"+ shift.locationName + "</h4>" +
+                        "    <div class=\"location-content-infowindow\"></div>" +
+                        "</section>";
+                html = html + buildHTMLContent(shift);
+
+                contentHtml[shift.RID] = html;
+
+                google.maps.event.addListener(marker[shift.RID], 'click',
+                        openShiftDetails(shift.RID, marker[shift.RID])
+                );
+            } else {
+                contentHtml[shift.RID] = contentHtml[shift.RID] + "<br />" + buildHTMLContent(shift);
+            }
+        }
+
+        if (LatLngList.length != 0){
+            var bounds = new google.maps.LatLngBounds ();
+            for (var i = 0, LtLgLen = LatLngList.length; i < LtLgLen; i++) {
+                bounds.extend (LatLngList[i]);
+            }
+            map.fitBounds (bounds);
+        }
+    }
+
+    function openShiftDetails(RID, marker) {
+        return function() {
+            var infowindow = new google.maps.InfoWindow({
+                content : contentHtml[RID],
+                maxWidth: 300
+            });
+            infowindow.open(map, marker);
+        };
+    }
+
+    function buildHTMLContent(shift) {
+        var start = moment.unix(shift.start);
+        var end = moment.unix(shift.end);
+        var html = "<section class=\"shift-infowindow\">" +
+                "   <h5>" + (null === shift.title ? shift.shiftType : shift.title) + "</h5>" +
+                "   <div class=\"shift-content-infowindow\">" +
+                "       <h6>" + start.format('HH:mm DD.MM.YYYY') + " - " + end.format('HH:mm DD.MM.YYYY') + "</h6>"
+                "   </div>" +
+                "</section>";
+
+        return html;
+    }
+
     function renderTime() {
         var currentTime = new Date();
         var h = currentTime.getHours();
@@ -50,6 +155,5 @@
         myClock.textContent = h + ":" + m + ":" + s + " ";
         myClock.innerText = h + ":" + m + ":" + s + " " ;
     }
-    renderTime();
-</script>
 
+</script>
