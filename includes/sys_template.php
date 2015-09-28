@@ -45,6 +45,28 @@ function div($class, $content = array(), $id = "") {
   return '<div' . $id . ' class="' . $class . '">' . join("\n", $content) . '</div>';
 }
 
+/**
+ * Creates a script tag.
+ *
+ * @param $src
+ * @return string
+ */
+function scriptTag($src)
+{
+    return sprintf("<script type=\"text/javascript\" src=\"%s\"></script>", $src);
+}
+
+/**
+ * Creates a script section.
+ *
+ * @param $content
+ * @return string
+ */
+function script($content)
+{
+    return sprintf("<script type=\"text/javascript\">%s</script>", $content);
+}
+
 function heading($content, $number = 1) {
   return "<h" . $number . ">" . $content . "</h" . $number . ">";
 }
@@ -263,9 +285,20 @@ function form_submit($name, $label) {
 /**
  * Rendert ein Formular-Textfeld
  */
-function form_text($name, $label, $value, $disabled = false) {
+function form_text($name, $label, $value, $disabled = false, $readonly = false) {
   $disabled = $disabled ? ' disabled="disabled"' : '';
-  return form_element($label, '<input class="form-control" id="form_' . $name . '" type="text" name="' . $name . '" value="' . htmlspecialchars($value) . '" ' . $disabled . '/>', 'form_' . $name);
+  return form_element(
+      $label,
+      sprintf(
+          '<input class="form-control" id="form_%s" type="text" name="%s" value="%s" %s %s/>',
+          htmlspecialchars($name),
+          htmlspecialchars($name),
+          htmlspecialchars($value),
+          $disabled,
+          ($readonly ? 'readonly' : '')
+      ),
+      'form_' . $name
+  );
 }
 
 /**

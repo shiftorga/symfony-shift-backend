@@ -12,13 +12,16 @@ function getDashboardTitle()
  */
 function get_dashboard()
 {
-    $shifts = getAllShifts();
+    global $privileges;
+
+    require_once realpath(__DIR__ . '/../controller/api.php');
+    $shifts = getAllUpcomingShifts();
 
     $viewData = array(
         'number_upcoming_shifts' => block(
             array(
                 'description' => _("Angels needed in the next 3 hrs"),
-                'number' => getNumberUpcomingShifts($shifts, 3*60*60)),
+                'number' => countUpcomingNeededAngels($shifts, 3*60*60)),
             BLOCK_TYPE_COUNTER
         ),
         'number_upcoming_night_shifts' => block(
@@ -32,7 +35,7 @@ function get_dashboard()
             array(
                 'description' => _("Angels currently working"),
                 'number' => getCurrentlyWorkingAngels()
-            ),
+                ),
             BLOCK_TYPE_COUNTER
         ),
         'number_hours_worked' => block(
@@ -42,6 +45,9 @@ function get_dashboard()
             ),
             BLOCK_TYPE_COUNTER
         ),
+        'my_next_jobs' => (in_array('user_shifts', $privileges))
+            ? block(array('title' => _("My next jobs"), 'body' => getUsersNextJobs($shifts, 3*60*60)), BLOCK_TYPE_PANEL)
+            : '',
         'jobs_currently_running' => block(
             array(
                 'title' => _("Currently running"),
@@ -68,6 +74,7 @@ function get_dashboard()
                 'title' => _("News"), 'body' => getAllNewsList()),
             BLOCK_TYPE_PANEL
         ),
+        'api_shifts_link' => api_link('shifts'),
     );
 
     return  dashboardView($viewData);
@@ -98,6 +105,8 @@ function getListUpcomingShifts($shifts, $withinSeconds)
 }
 
 /**
+ * Filters the upcoming shifts within a given time.
+ *
  * @param $shifts
  * @param $withinSeconds
  *
@@ -138,6 +147,52 @@ function getCurrentShifts($shifts)
 
         return $currentTime >= $shift['start'] && $shift['end'] >= $currentTime;
     });
+}
+
+function countUpcomingNeededAngels($shifts, $withinSeconds)
+{
+    $count = 0;
+    $upcomingShifts = getUpcomingShifts($shifts, $withinSeconds);
+    $ids = array();
+    foreach ($upcomingShifts as $shift) {
+        $ids[] = $shift['SID'];
+    }
+    if (count($ids) === 0) {
+        return $count;
+    }
+
+    $neededInShifts = sql_select(sprintf(
+        "SELECT SUM(nt.count) AS countInShifts FROM NeededAngelTypes nt WHERE nt.shift_id IN ('%s')",
+        implode("', '", $ids)
+    ));
+
+    if (!$neededInShifts) {
+        return $count;
+    }
+    $result = array_shift($neededInShifts);
+    $count = $count + $result['countInShifts'];
+
+    return $count;
+}
+
+function getUsersNextJobs($shifts, $withinSeconds)
+{
+    global $user;
+    $ids = array();
+    foreach (getUpcomingShifts($shifts, $withinSeconds) as $shift) {
+        $ids[] = $shift['SID'];
+    }
+    if (count($ids) === 0) {
+        return 0;
+    }
+    $sql = sprintf(
+        "SELECT s.* FROM ShiftEntry se JOIN Shifts s ON s.SID = se.SID WHERE se.UID = '%s' AND se.SID IN ('%s')",
+        $user['UID'],
+        implode("', '", $ids)
+    );
+    $usersShifts = sql_select($sql);
+
+    return buildList($usersShifts);
 }
 
 /**
@@ -188,9 +243,14 @@ function buildList($shifts)
  *
  * @return array
  */
-function getAllShifts()
+function getAllUpcomingShifts()
 {
-    return sql_select("SELECT s.*, r.Name as location, t.name as type FROM `Shifts` s, `Room` r, `ShiftTypes` t GROUP BY s.`SID` ORDER BY s.`start`");
+    return sql_select(
+        "SELECT s.*, r.Name as location, t.name as type
+         FROM `Shifts` s, `Room` r, `ShiftTypes` t
+         WHERE s.`start` > UNIX_TIMESTAMP() OR s.`end` > UNIX_TIMESTAMP()
+         GROUP BY s.`SID` ORDER BY s.`start`"
+    );
 }
 
 /**
@@ -220,13 +280,25 @@ function getAllNewsList()
 }
 
 /**
+ * Counts the currently working angels by a simple SQL query.
+ *
  * @return int
  */
 function getCurrentlyWorkingAngels()
 {
-    $count = count(sql_select("SELECT id FROM `ShiftEntry`;"));
+    $result = sql_select(
+        "SELECT COUNT(s.SID) as countWorkingAngels, s.SID
+         FROM ShiftEntry se
+         INNER JOIN Shifts s ON se.SID = s.SID
+         WHERE s.`start` < UNIX_TIMESTAMP() AND s.`end` > UNIX_TIMESTAMP()
+         GROUP BY s.SID;"
+    );
 
-    return $count;
+    if (1 !== count($result)) {
+        return 0;
+    }
+
+    return $result[0]['countWorkingAngels'];
 }
 
 /**
@@ -260,20 +332,13 @@ function countHoursToBeWorked($shifts)
  */
 function getNumberUpcomingNightShifts()
 {
-    $nightShifts = getNightShifts();
-    $upcomingNightShifts = array_filter($nightShifts, function ($shift) {
-        $currentTime = time();
+    $result = sql_select("SELECT COUNT(*) as countUpcomingNightShifts
+                          FROM Shifts
+                          WHERE (FROM_UNIXTIME(start, '%H') > 18 OR FROM_UNIXTIME(end, '%H') < 6)
+                          AND (start > UNIX_TIMESTAMP() OR end > UNIX_TIMESTAMP());");
+    if (1 !== count($result)) {
+        return 0;
+    }
 
-        return $shift['start'] >= $currentTime || $shift['end'] >= $currentTime;
-    });
-
-    return count($upcomingNightShifts);
-}
-
-/**
- * @return array
- */
-function getNightShifts()
-{
-    return sql_select("SELECT * FROM Shifts WHERE FROM_UNIXTIME(start, '%H') > 18 OR FROM_UNIXTIME(end, '%H') < 6;");
+    return $result[0]['countUpcomingNightShifts'];
 }
