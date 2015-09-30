@@ -9,8 +9,10 @@ function admin_active() {
   
   $msg = "";
   $search = "";
-   //TODO WTF?! do you even count(*) bro?
-  $forced_count = sql_num_query("SELECT * FROM `User` WHERE `force_active`=1");
+    $queryResult = sql_query("SELECT count(*) FROM `User` WHERE `force_active`=1");
+    if ($queryResult instanceof mysqli_result) {
+        $forced_count = current($queryResult->fetch_row());
+    }
   $count = $forced_count;
   $limit = "";
   $set_active = "";

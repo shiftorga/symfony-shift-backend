@@ -68,7 +68,7 @@ function Users_view($users, $order_by, $arrived_count, $active_count, $force_act
       )),
       table(array(
           'Nick' => Users_table_header_link('Nick', _('Nick'), $order_by),
-          'Vorname' => Users_table_header_link('Vorname', _('Firstname'), $order_by),
+          'Vorname' => Users_table_header_link('Vorname', _('First Name'), $order_by),
           'Name' => Users_table_header_link('Name', _('Name'), $order_by),
           'gender' => Users_table_header_link('gender', _('Gender'), $order_by),
           'Handy' => Users_table_header_link('Mobile', _('Mobile'), $order_by),
