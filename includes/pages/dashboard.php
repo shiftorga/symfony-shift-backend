@@ -332,10 +332,23 @@ function countHoursToBeWorked($shifts)
  */
 function getNumberUpcomingNightShifts()
 {
-    $result = sql_select("SELECT COUNT(*) as countUpcomingNightShifts
-                          FROM Shifts
-                          WHERE (FROM_UNIXTIME(start, '%H') > 18 OR FROM_UNIXTIME(end, '%H') < 6)
-                          AND (start > UNIX_TIMESTAMP() OR end > UNIX_TIMESTAMP());");
+    $result = sql_select("SELECT SUM(sub.stillNeeded) FROM (
+	SELECT
+		'1' as grouping,
+		s.SID,
+		(SUM(nat.count)- COUNT(se.SID)) as stillNeeded
+	FROM Shifts s
+	INNER JOIN NeededAngelTypes nat
+		ON s.SID = nat.shift_id
+	LEFT JOIN ShiftEntry se
+		ON se.SID = s.SID
+	WHERE
+	    (s.start -UNIX_TIMESTAMP() BETWEEN -7200 AND 64800) AND
+		(FROM_UNIXTIME(s.start, '%H') > 18 OR FROM_UNIXTIME(s.end, '%H') < 6)
+	AND  (s.start > UNIX_TIMESTAMP() OR s.end > UNIX_TIMESTAMP())
+	GROUP BY s.SID
+    ) sub
+    GROUP BY sub.grouping;");
     if (1 !== count($result)) {
         return 0;
     }
