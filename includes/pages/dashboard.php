@@ -352,6 +352,6 @@ function getNumberUpcomingNightShifts()
     if (1 !== count($result)) {
         return 0;
     }
-    var_dump($result);
+
     return $result[0]['countUpcomingNightShifts'];
 }
