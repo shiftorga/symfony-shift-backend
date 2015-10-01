@@ -127,10 +127,12 @@ function guest_register() {
       $hometown = strip_request_item('hometown');
     if (isset($_REQUEST['comment']))
       $comment = strip_request_item_nl('comment');
+
     if (isset($_REQUEST['gender'])
         && array_key_exists($_REQUEST['gender'], $genders)) {
         $gender = $_REQUEST['gender'];
     }
+
 
     if ($ok) {
       sql_query("
@@ -239,13 +241,15 @@ function guest_register() {
                       )),
                       div('col-sm-6', array(
                           form_text('hometown', _("Hometown"), $hometown) 
-                      )) 
-                  )),
+                      )),
+                      div('col-sm-6', array(
+                              form_text('comment', _("Additional Information(Language / Profession)"), $comment)
+                          ))
+                      )),
                   form_info(entry_required() . ' = ' . _("Entry required!")) 
               )) 
           )),
-          // form_textarea('comment', _("Did you help at former CCC events and which tasks have you performed then?"), $comment),
-          form_submit('submit', _("Register")) 
+          form_submit('submit', _("Register"))
       )) 
   ));
 }
