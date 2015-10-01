@@ -151,28 +151,40 @@ function getCurrentShifts($shifts)
 
 function countUpcomingNeededAngels($shifts, $withinSeconds)
 {
-    $count = 0;
     $upcomingShifts = getUpcomingShifts($shifts, $withinSeconds);
     $ids = array();
     foreach ($upcomingShifts as $shift) {
         $ids[] = $shift['SID'];
     }
     if (count($ids) === 0) {
-        return $count;
+        return 0;
     }
 
-    $neededInShifts = sql_select(sprintf(
-        "SELECT SUM(nt.count) AS countInShifts FROM NeededAngelTypes nt WHERE nt.shift_id IN ('%s')",
-        implode("', '", $ids)
-    ));
+    $neededInShifts = sql_select(
+        sprintf(
+            "SELECT SUM(sub.stillNeeded) as countNeeded FROM (
+            SELECT
+                '1' as grouping,
+                s.SID,
+                (SUM(nat.count)- COUNT(se.SID)) as stillNeeded
+            FROM Shifts s
+            INNER JOIN NeededAngelTypes nat
+                ON s.SID = nat.shift_id
+            LEFT JOIN ShiftEntry se
+                ON se.SID = s.SID
+            WHERE s.SID IN ('%s')
+            GROUP BY s.SID
+            ) sub
+            GROUP BY sub.grouping;",
+            implode("', '", $ids)
+        )
+    );
 
     if (!$neededInShifts) {
-        return $count;
+        return 0;
     }
-    $result = array_shift($neededInShifts);
-    $count = $count + $result['countInShifts'];
 
-    return $count;
+    return $neededInShifts[0]['countNeeded'];
 }
 
 function getUsersNextJobs($shifts, $withinSeconds)
