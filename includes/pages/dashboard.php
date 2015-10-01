@@ -332,7 +332,7 @@ function countHoursToBeWorked($shifts)
  */
 function getNumberUpcomingNightShifts()
 {
-    $result = sql_select("SELECT SUM(sub.stillNeeded) FROM (
+    $result = sql_select("SELECT SUM(sub.stillNeeded) as countUpcomingNightShifts FROM (
 	SELECT
 		'1' as grouping,
 		s.SID,
