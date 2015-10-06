@@ -19,7 +19,7 @@
                 "summary": "Shifts",
                 "description": "A shift contains information about the shift type, the needed angels, and the room where the shift\ntakes place. The data given as a collection dependes on the authorized user.\n",
                 "tags": [
-                    "Products"
+                    "Shifts"
                 ],
                 "responses": {
                     "200": {
@@ -73,6 +73,12 @@
                     "type": "object",
                     "$ref": "#/definitions/location"
                 },
+                "shiftEntries": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/shiftEntry"
+                    }
+                },
                 "URL": {
                     "type": "string"
                 },
@@ -94,6 +100,34 @@
                 "edited_at_timestamp": {
                     "type": "string",
                     "description": "The timestamp of the last edit."
+                }
+            }
+        },
+        "shiftEntry": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number"
+                },
+                "shift": {
+                    "type": "object",
+                    "$ref": "#/definitions/shift"
+                },
+                "angelType": {
+                    "type": "object",
+                    "$ref": "#/definitions/angelType"
+                },
+                "UID": {
+                    "type": "number"
+                },
+                "Comment": {
+                    "type": "string"
+                },
+                "freeload_comment": {
+                    "type": "string"
+                },
+                "freeload": {
+                    "type": "number"
                 }
             }
         },
