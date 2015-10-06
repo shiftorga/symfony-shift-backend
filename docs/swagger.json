@@ -54,8 +54,10 @@
                     "$ref": "#/definitions/shiftType"
                 },
                 "neededAngels": {
-                    "type": "object",
-                    "$ref": "#/definitions/neededAngelType"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/neededAngelType"
+                    }
                 },
                 "title": {
                     "type": "string",
