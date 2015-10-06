@@ -1,0 +1,195 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Engelsystem API",
+        "description": "API to use user shifts on the engelsystem",
+        "version": "1.0.0"
+    },
+    "host": "engel-muccc.de",
+    "schemes": [
+        "https"
+    ],
+    "basePath": "/api/v1",
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/shifts": {
+            "get": {
+                "summary": "Shifts",
+                "description": "A shift contains information about the shift type, the needed angels, and the room where the shift\ntakes place. The data given as a collection dependes on the authorized user.\n",
+                "tags": [
+                    "Products"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of shifts",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/shift"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "shift": {
+            "type": "object",
+            "properties": {
+                "SID": {
+                    "type": "string",
+                    "description": "Unique identifier representing a specific shift"
+                },
+                "shiftType": {
+                    "type": "object",
+                    "$ref": "#/definitions/shiftType"
+                },
+                "shifttype_id": {
+                    "type": "string",
+                    "description": "Unique identifier of the selected shift type"
+                },
+                "title": {
+                    "type": "string",
+                    "description": "Display name of shift. Does not need to be given."
+                },
+                "start": {
+                    "type": "string",
+                    "description": "The timestamp for the start time"
+                },
+                "end": {
+                    "type": "string",
+                    "description": "The timestamp for the end time."
+                },
+                "location": {
+                    "type": "object",
+                    "$ref": "#/definitions/location"
+                },
+                "URL": {
+                    "type": "string"
+                },
+                "PSID": {
+                    "type": "number"
+                },
+                "created_by_user_id": {
+                    "type": "number",
+                    "description": "The id of the user that created the shift."
+                },
+                "created_at_timestamp": {
+                    "type": "string",
+                    "description": "The timestamp when the shift was created"
+                },
+                "edited_by_user_id": {
+                    "type": "number",
+                    "description": "Id of the last editing user."
+                },
+                "edited_at_timestamp": {
+                    "type": "string",
+                    "description": "The timestamp of the last edit."
+                }
+            }
+        },
+        "shiftType": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number",
+                    "description": "Unique identifier for the shift type."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the shift type. Used as tilte for shifts without any title defined."
+                },
+                "angelType": {
+                    "type": "object",
+                    "$ref": "#/definitions/angelType"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "A short description about that shift type."
+                }
+            }
+        },
+        "angelType": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number",
+                    "description": "The unique identifier for the angel type"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "A name to describe a angel type."
+                },
+                "restricted": {
+                    "type": "number"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "A description or hints for the angel type."
+                }
+            }
+        },
+        "location": {
+            "type": "object",
+            "properties": {
+                "RID": {
+                    "type": "number",
+                    "description": "Unique identifier for the location/room"
+                },
+                "Name": {
+                    "type": "string",
+                    "description": "A name of the location/room"
+                },
+                "Man": {
+                    "type": "string"
+                },
+                "FromPentabarf": {
+                    "type": "string"
+                },
+                "show": {
+                    "type": "string"
+                },
+                "Number": {
+                    "type": "number",
+                    "description": "In case of a room the number is the room number"
+                },
+                "location": {
+                    "type": "string",
+                    "description": "Location string by google places"
+                },
+                "lat": {
+                    "type": "string",
+                    "description": "The latitude of the locations coordinates"
+                },
+                "long": {
+                    "type": "string",
+                    "description": "The longitude of the locations coordinates"
+                }
+            }
+        },
+        "Error": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "fields": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
