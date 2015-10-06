@@ -53,9 +53,9 @@
                     "type": "object",
                     "$ref": "#/definitions/shiftType"
                 },
-                "shifttype_id": {
-                    "type": "string",
-                    "description": "Unique identifier of the selected shift type"
+                "neededAngels": {
+                    "type": "object",
+                    "$ref": "#/definitions/neededAngelType"
                 },
                 "title": {
                     "type": "string",
@@ -173,6 +173,27 @@
                 "long": {
                     "type": "string",
                     "description": "The longitude of the locations coordinates"
+                }
+            }
+        },
+        "neededAngelType": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number",
+                    "description": "A unique identifier for the needed angel type."
+                },
+                "location": {
+                    "type": "object",
+                    "$ref": "#/definitions/location"
+                },
+                "angelType": {
+                    "type": "object",
+                    "$ref": "#/definitions/angelType"
+                },
+                "count": {
+                    "type": "number",
+                    "description": "The count of angels needed for the location at all or a specific shift"
                 }
             }
         },
