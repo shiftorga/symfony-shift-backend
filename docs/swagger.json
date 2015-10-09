@@ -17,7 +17,7 @@
         "/shifts": {
             "get": {
                 "summary": "Shifts",
-                "description": "A shift contains information about the shift type, the needed angels, and the room where the shift\ntakes place. The data given as a collection dependes on the authorized user.\n",
+                "description": "Get the list of shifts with this api endpoint.\n",
                 "tags": [
                     "Shifts"
                 ],
@@ -29,6 +29,244 @@
                             "items": {
                                 "$ref": "#/definitions/shift"
                             }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create a new shift",
+                "tags": [
+                    "Shifts"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Returns the complete shift with its new location (id where persisted)",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/shift"
+                        }
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/shifts/{id}": {
+            "get": {
+                "summary": "GET Shift",
+                "description": "Get a single shift with this api endpoint. An existing shift id must be given\n",
+                "tags": [
+                    "Shifts"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A single shift",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/shift"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "string",
+                        "description": "The id of a shift",
+                        "required": true
+                    }
+                ]
+            },
+            "patch": {
+                "summary": "Patch information to a shift",
+                "description": "Change specific values of a shift",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/shift"
+                        }
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "title",
+                        "in": "query",
+                        "required": false,
+                        "type": "string",
+                        "description": "The new title to set."
+                    },
+                    {
+                        "name": "start",
+                        "in": "query",
+                        "required": false,
+                        "type": "string",
+                        "description": "The new start timestamp to set."
+                    },
+                    {
+                        "name": "end",
+                        "in": "query",
+                        "required": false,
+                        "type": "string",
+                        "description": "The new end timestamp to set"
+                    }
+                ]
+            }
+        },
+        "/shift_types": {
+            "get": {
+                "summary": "Get all shift types",
+                "description": "A shift type is a kind of a grouping or category for a shift. Shifts without a name/title will get the \nshifts type's name as label.\n",
+                "tags": [
+                    "ShiftTypes"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of shift types",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/shiftType"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Post a shift type for a create new action.",
+                "tags": [
+                    "ShiftTypes"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Returns the new shift type with its location.",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/shiftType"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/locations": {
+            "get": {
+                "summary": "Locations",
+                "description": "A location describes a room or a location where the shift takes place each location can be defined with\na base set of needed angelt types.\n",
+                "tags": [
+                    "Locations"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of locations",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/location"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Post a location for a create new action.",
+                "tags": [
+                    "Locations"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Returns the new location with its location.",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/location"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/needed_angel_types": {
+            "get": {
+                "summary": "Needed angel types",
+                "description": "A needed angel type is an entity which describes the amount of angels\nneeded on a location or a shift.\n",
+                "tags": [
+                    "NeededAngelTypes"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of needed angel types",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/neededAngelType"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Post a needed angel type entity.",
+                "description": "\"By creating a needed angel type entity a you can decide to to add it to\na location or a shift. Doing so those entities will have an extra item \nin their neededAngelTypes\"\n",
+                "tags": [
+                    "Locations"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Returns the new location with its location.",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/location"
                         }
                     },
                     "default": {
@@ -53,7 +291,7 @@
                     "type": "object",
                     "$ref": "#/definitions/shiftType"
                 },
-                "neededAngels": {
+                "neededAngelTypes": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/neededAngelType"
@@ -192,23 +430,17 @@
                     "type": "string"
                 },
                 "show": {
-                    "type": "string"
+                    "type": "boolean"
                 },
                 "Number": {
-                    "type": "number",
+                    "type": "string",
                     "description": "In case of a room the number is the room number"
                 },
-                "location": {
-                    "type": "string",
-                    "description": "Location string by google places"
-                },
-                "lat": {
-                    "type": "string",
-                    "description": "The latitude of the locations coordinates"
-                },
-                "long": {
-                    "type": "string",
-                    "description": "The longitude of the locations coordinates"
+                "neededAngelTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/neededAngelType"
+                    }
                 }
             }
         },
@@ -222,6 +454,10 @@
                 "location": {
                     "type": "object",
                     "$ref": "#/definitions/location"
+                },
+                "shift": {
+                    "type": "object",
+                    "$ref": "#/definitions/shift"
                 },
                 "angelType": {
                     "type": "object",
