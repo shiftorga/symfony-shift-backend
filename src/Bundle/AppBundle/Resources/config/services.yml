@@ -1,6 +1,2 @@
 
 services:
-    engel.app.listener.legacy_app_on_route_not_found:
-        class: Engel\Bundle\AppBundle\Listener\LegacyApplicationOnRouteNotFoundListener
-        tags:
-            - { name: kernel.event_listener, event: kernel.exception, method: onHTTPNotFoundException }
