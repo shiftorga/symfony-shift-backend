@@ -4,10 +4,8 @@
     "description": "Shift planning system for chaos events",
     "license": "GPL2",
     "require": {
-        "bower-asset/bootstrap": "3.3.5",
         "erusev/parsedown": "1.1.0",
         "fxp/composer-asset-plugin": "~1.0",
-        "bower-asset/bootstrap-multiselect":"v0.9.13",
         "doctrine/dbal": "~2.5.2",
         "php": ">=5.3.9",
         "symfony/symfony": "2.7.*",

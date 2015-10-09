@@ -12,3 +12,19 @@ test/coverage
 /web/bundles/
 /app/cache
 /app/logs
+/node_modules/
+web/components
+
+# just use the *.ts files and compile on build
+/web/js/angular-shifts/src/**/*.js
+/web/js/angular-shifts/src/**/*.map
+/web/js/angular-shifts/src/*.js
+/web/js/angular-shifts/src/*.map
+/web/js/angular-shifts/tests/unit/**/*.js
+/web/js/angular-shifts/tests/unit/**/*.map
+/web/js/angular-shifts/tests/_test_all.js
+/web/js/angular-shifts/tests/_test_all.js.map
+/web/js/angular-shifts/tests/fakeApi/*.js
+/web/js/angular-shifts/tests/fakeApi/*.map
+/web/js/angular-shifts/tests/integration/*.js
+/web/js/angular-shifts/tests/integration/*.map
