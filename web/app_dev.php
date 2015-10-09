@@ -152,7 +152,6 @@ if (isset($_REQUEST['p']) && preg_match("/^[a-z0-9_]*$/i", $_REQUEST['p']) && (i
     $content = guest_start();
   }
 } else {
-    var_dump('Symfony route');
     // If you don't want to setup permissions the proper way, just uncomment the following PHP line
     // read http://symfony.com/doc/current/book/installation.html#checking-symfony-application-configuration-and-setup
     // for more information

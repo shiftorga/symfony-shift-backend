@@ -36,3 +36,4 @@ var angularShift;
         angular.module('angularShift.shifts').controller('ShiftTypeEditController', ShiftTypeEditController);
     })(shifts = angularShift.shifts || (angularShift.shifts = {}));
 })(angularShift || (angularShift = {}));
+//# sourceMappingURL=ShiftTypeEditController.js.map

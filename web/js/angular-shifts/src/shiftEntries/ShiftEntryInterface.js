@@ -7,3 +7,4 @@ var angularShift;
     })(shiftEntries = angularShift.shiftEntries || (angularShift.shiftEntries = {}));
 })(angularShift || (angularShift = {}));
 ;
+//# sourceMappingURL=ShiftEntryInterface.js.map

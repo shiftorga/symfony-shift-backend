@@ -11,3 +11,4 @@
 /// <reference path='controllers/ShiftsOnCalendarController' />
 /// <reference path='controllers/ShiftsEditController' />
 /// <reference path='controllers/ShiftsShowController' />
+//# sourceMappingURL=_all.js.map

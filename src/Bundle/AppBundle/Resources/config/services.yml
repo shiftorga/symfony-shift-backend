@@ -1,2 +1,6 @@
 
 services:
+  enge.api.controller.shifts:
+    class: Engel\Bundle\AppBundle\Controller\Api\ShiftsController
+    calls:
+      - [ setContainer, [ @service_container ] ]

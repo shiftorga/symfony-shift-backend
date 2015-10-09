@@ -1,3 +1,8 @@
 engel_app:
-    resource: "@EngelAppBundle/Resources/config/routing.php"
+    resource: "@EngelAppBundle/Resources/config/routing.yml"
     prefix:   /
+
+engel_app_rest:
+    type: rest
+    resource: "@EngelAppBundle/Resources/config/rest_routing.yml"
+    prefix:   /api

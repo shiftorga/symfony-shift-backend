@@ -40,8 +40,7 @@ var angularShift;
         })();
         utils.ConfirmationService = ConfirmationService;
         ConfirmationService.$inject = ['$q'];
-        angular
-            .module('angularShift.utils.Confirmation', [])
-            .service('ConfirmationService', ConfirmationService);
+        angular.module('angularShift.utils.Confirmation', []).service('ConfirmationService', ConfirmationService);
     })(utils = angularShift.utils || (angularShift.utils = {}));
 })(angularShift || (angularShift = {}));
+//# sourceMappingURL=ConfirmationService.js.map

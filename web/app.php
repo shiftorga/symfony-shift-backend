@@ -150,7 +150,6 @@ if (isset($_REQUEST['p']) && preg_match("/^[a-z0-9_]*$/i", $_REQUEST['p']) && (i
     $content = guest_start();
   }
 } else {
-    var_dump('hier');
     $loader = require_once __DIR__ . '/../app/bootstrap.php.cache';
 
     require_once __DIR__ . '/../app/AppKernel.php';

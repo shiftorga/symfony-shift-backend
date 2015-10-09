@@ -67,3 +67,4 @@ var angularShift;
         angular.module('angularShift.locations').service('LocationsService', LocationsService);
     })(locations = angularShift.locations || (angularShift.locations = {}));
 })(angularShift || (angularShift = {}));
+//# sourceMappingURL=LocationsService.js.map

@@ -1,0 +1,60 @@
+{% extends '::base.html.twig' %}
+
+{% block content %}
+    <div class="toastr-container" id="toast-container"></div>
+
+    <div class="panel panel-default" ng-app="angularShift">
+        <div class="panel-heading">Shifts</div>
+        <div class="panel-body">
+            <div class="container" ui-view="content"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="components/fullcalendar/dist/fullcalendar.css"/>
+    <link rel="stylesheet" href="components/angular-toastr/dist/angular-toastr.css" />
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="components/moment/min/moment.min.js"></script>
+    <script type="text/javascript" src="components/angular/angular.js"></script>
+    <script type="text/javascript" src="components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script type="text/javascript" src="components/angular-ui-calendar/src/calendar.js"></script>
+    <script type="text/javascript" src="components/angular-toastr/dist/angular-toastr.min.js"></script>
+    <script type="text/javascript" src="components/fullcalendar/dist/fullcalendar.min.js"></script>
+    <script type="text/javascript" src="components/fullcalendar/dist/gcal.js"></script>
+    <script type="text/javascript" src="components/restangular/dist/restangular.min.js"></script>
+    <script type="text/javascript" src="components/lodash/dist/lodash.min.js"></script>
+    <script type="text/javascript" src="components/angular-toastr/dist/angular-toastr.tpls.min.js"></script>
+    <script type="text/javascript" src="components/moment/min/moment-with-locales.min.js"></script>
+    <script type="text/javascript" src="components/bootbox/bootbox.js"></script>
+
+    <script src="js/angular-shifts/src/shiftEntries/shfitEntries_app.js"></script>
+    <script src="js/angular-shifts/src/shiftTypes/shfitTypes_app.js"></script>
+    <script src="js/angular-shifts/src/shifts/shifts_app.js"></script>
+    <script src="js/angular-shifts/src/locations/locations_app.js"></script>
+    <script src="js/angular-shifts/src/app.js"></script>
+
+    <script type="application/javascript" src="js/angular-shifts/src/shifts/services/ShiftsService.js"></script>
+    <script type="application/javascript" src="js/angular-shifts/src/shifts/services/ShiftEventConverter.js"></script>
+    <script type="application/javascript" src="js/angular-shifts/src/shifts/controllers/ShiftsOnCalendarController.js"></script>
+    <script type="application/javascript" src="js/angular-shifts/src/shifts/controllers/ShiftsEditController.js"></script>
+    <script type="application/javascript" src="js/angular-shifts/src/shifts/controllers/ShiftsShowController.js"></script>
+
+    <script type="application/javascript" src="js/angular-shifts/src/shiftEntries/ShiftEntriesService.js"></script>
+
+    <script type="application/javascript" src="js/angular-shifts/src/shiftTypes/ShiftTypeEditController.js"></script>
+    <script type="application/javascript" src="js/angular-shifts/src/shiftTypes/ShiftTypesService.js"></script>
+
+    <script type="application/javascript" src="js/angular-shifts/src/locations/LocationEditController.js"></script>
+    <script type="application/javascript" src="js/angular-shifts/src/locations/LocationsService.js"></script>
+
+    <script type="application/javascript" src="js/angular-shifts/src/utils/NotificationService.js"></script>
+    <script type="application/javascript" src="js/angular-shifts/src/utils/ConfirmationService.js"></script>
+{% endblock %}
+
+
+

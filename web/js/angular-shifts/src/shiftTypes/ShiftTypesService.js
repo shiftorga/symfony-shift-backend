@@ -67,3 +67,4 @@ var angularShift;
         angular.module('angularShift.shiftTypes').service('ShiftTypesService', ShiftTypesService);
     })(shiftTypes = angularShift.shiftTypes || (angularShift.shiftTypes = {}));
 })(angularShift || (angularShift = {}));
+//# sourceMappingURL=ShiftTypesService.js.map

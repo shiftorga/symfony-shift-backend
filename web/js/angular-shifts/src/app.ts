@@ -25,7 +25,6 @@ module angularShift {
         .config(function(RestangularProvider) {
             RestangularProvider.setEncodeIds(false);
             RestangularProvider.setBaseUrl('api');
-            RestangularProvider.setRequestSuffix('.json');
         })
         .config(function($stateProvider, $urlRouterProvider) {
             $urlRouterProvider.otherwise("/user_shifts/calendar");

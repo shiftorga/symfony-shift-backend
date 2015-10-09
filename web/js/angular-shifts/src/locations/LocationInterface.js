@@ -7,3 +7,4 @@ var angularShift;
     })(locations = angularShift.locations || (angularShift.locations = {}));
 })(angularShift || (angularShift = {}));
 ;
+//# sourceMappingURL=LocationInterface.js.map

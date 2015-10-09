@@ -70,3 +70,4 @@ var angularShift;
         angular.module('angularShift.shifts').service('ShiftsService', ShiftsService);
     })(shifts = angularShift.shifts || (angularShift.shifts = {}));
 })(angularShift || (angularShift = {}));
+//# sourceMappingURL=ShiftsService.js.map

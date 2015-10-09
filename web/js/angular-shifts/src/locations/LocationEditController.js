@@ -36,3 +36,4 @@ var angularShift;
         angular.module('angularShift.shifts').controller('LocationEditController', LocationEditController);
     })(locations = angularShift.locations || (angularShift.locations = {}));
 })(angularShift || (angularShift = {}));
+//# sourceMappingURL=LocationEditController.js.map

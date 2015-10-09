@@ -9,8 +9,7 @@
 var angularShift;
 (function (angularShift) {
     'use strict';
-    angular
-        .module('angularShift', [
+    angular.module('angularShift', [
         'restangular',
         'angularShift.shifts',
         'angularShift.shiftEntries',
@@ -20,13 +19,11 @@ var angularShift;
         'angularShift.utils.Confirmation',
         'ui.router',
         'toastr'
-    ])
-        .config(function (RestangularProvider) {
+    ]).config(function (RestangularProvider) {
         RestangularProvider.setEncodeIds(false);
         RestangularProvider.setBaseUrl('api');
-        RestangularProvider.setRequestSuffix('.json');
-    })
-        .config(function ($stateProvider, $urlRouterProvider) {
+    }).config(function ($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise("/user_shifts/calendar");
     });
 })(angularShift || (angularShift = {}));
+//# sourceMappingURL=app.js.map

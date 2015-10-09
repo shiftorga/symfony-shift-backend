@@ -56,3 +56,4 @@ var angularShift;
         angular.module('angularShift.shifts').controller('ShiftsOnCalendarController', ShiftsOnCalendarController);
     })(shifts = angularShift.shifts || (angularShift.shifts = {}));
 })(angularShift || (angularShift = {}));
+//# sourceMappingURL=ShiftsOnCalendarController.js.map

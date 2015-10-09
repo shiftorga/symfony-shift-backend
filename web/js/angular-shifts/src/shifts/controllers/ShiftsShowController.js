@@ -53,3 +53,4 @@ var angularShift;
         angular.module('angularShift.shifts').controller('ShiftsShowController', ShiftsShowController);
     })(shifts = angularShift.shifts || (angularShift.shifts = {}));
 })(angularShift || (angularShift = {}));
+//# sourceMappingURL=ShiftsShowController.js.map

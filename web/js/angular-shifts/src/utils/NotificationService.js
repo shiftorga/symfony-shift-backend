@@ -83,3 +83,4 @@ var angularShift;
         app.service('NotificationService', NotificationService);
     })(utils = angularShift.utils || (angularShift.utils = {}));
 })(angularShift || (angularShift = {}));
+//# sourceMappingURL=NotificationService.js.map
