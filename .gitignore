@@ -8,6 +8,7 @@ config/config.php
 test/coverage
 .vagrant
 /vendor/
-/public/assets/
+/web/assets/
+/web/bundles/
 /app/cache
 /app/logs
