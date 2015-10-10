@@ -39,9 +39,9 @@ class Userangeltypes
     private $confirmUser;
 
     /**
-     * @var \Engel\Bundle\AppBundle\Entity\Angeltypes
+     * @var \Engel\Bundle\AppBundle\Entity\AngelType
      *
-     * @ORM\ManyToOne(targetEntity="Engel\Bundle\AppBundle\Entity\Angeltypes")
+     * @ORM\ManyToOne(targetEntity="Engel\Bundle\AppBundle\Entity\AngelType")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="angeltype_id", referencedColumnName="id")
      * })

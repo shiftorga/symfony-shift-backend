@@ -43,9 +43,9 @@ class Shiftentry
     private $id;
 
     /**
-     * @var \Engel\Bundle\AppBundle\Entity\Angeltypes
+     * @var \Engel\Bundle\AppBundle\Entity\AngelType
      *
-     * @ORM\ManyToOne(targetEntity="Engel\Bundle\AppBundle\Entity\Angeltypes")
+     * @ORM\ManyToOne(targetEntity="Engel\Bundle\AppBundle\Entity\AngelType")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="TID", referencedColumnName="id")
      * })
@@ -129,7 +129,7 @@ class Shiftentry
     }
 
     /**
-     * @return Angeltypes
+     * @return AngelType
      */
     public function getTid()
     {
@@ -137,7 +137,7 @@ class Shiftentry
     }
 
     /**
-     * @param Angeltypes $tid
+     * @param AngelType $tid
      */
     public function setTid($tid)
     {

@@ -36,14 +36,14 @@ class Shifttypes
     private $id;
 
     /**
-     * @var \Engel\Bundle\AppBundle\Entity\Angeltypes
+     * @var \Engel\Bundle\AppBundle\Entity\AngelType
      *
-     * @ORM\ManyToOne(targetEntity="Engel\Bundle\AppBundle\Entity\Angeltypes")
+     * @ORM\ManyToOne(targetEntity="Engel\Bundle\AppBundle\Entity\AngelType")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="angeltype_id", referencedColumnName="id")
      * })
      */
-    private $angeltype;
+    private $angelType;
 
     /**
      * @return string
@@ -86,18 +86,18 @@ class Shifttypes
     }
 
     /**
-     * @return Angeltypes
+     * @return AngelType
      */
-    public function getAngeltype()
+    public function getAngelType()
     {
-        return $this->angeltype;
+        return $this->angelType;
     }
 
     /**
-     * @param Angeltypes $angeltype
+     * @param AngelType $angelType
      */
-    public function setAngeltype($angeltype)
+    public function setAngelType(AngelType $angelType)
     {
-        $this->angeltype = $angeltype;
+        $this->angelType = $angelType;
     }
 }

@@ -5,12 +5,12 @@ namespace Engel\Bundle\AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Angeltypes
+ * AngelType
  *
  * @ORM\Table(name="AngelTypes", uniqueConstraints={@ORM\UniqueConstraint(name="Name", columns={"name"})})
  * @ORM\Entity
  */
-class Angeltypes
+class AngelType
 {
     /**
      * @var string
