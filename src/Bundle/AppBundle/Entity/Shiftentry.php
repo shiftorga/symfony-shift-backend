@@ -63,9 +63,9 @@ class Shiftentry
     private $uid;
 
     /**
-     * @var \Engel\Bundle\AppBundle\Entity\Shifts
+     * @var \Engel\Bundle\AppBundle\Entity\Shift
      *
-     * @ORM\ManyToOne(targetEntity="Engel\Bundle\AppBundle\Entity\Shifts")
+     * @ORM\ManyToOne(targetEntity="Engel\Bundle\AppBundle\Entity\Shift")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="SID", referencedColumnName="SID")
      * })
@@ -161,7 +161,7 @@ class Shiftentry
     }
 
     /**
-     * @return Shifts
+     * @return Shift
      */
     public function getSid()
     {
@@ -169,7 +169,7 @@ class Shiftentry
     }
 
     /**
-     * @param Shifts $sid
+     * @param Shift $sid
      */
     public function setSid($sid)
     {

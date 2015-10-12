@@ -39,9 +39,9 @@ class NeededAngelTypes
     private $angelType;
 
     /**
-     * @var \Engel\Bundle\AppBundle\Entity\Shifts
+     * @var \Engel\Bundle\AppBundle\Entity\Shift
      *
-     * @ORM\ManyToOne(targetEntity="Engel\Bundle\AppBundle\Entity\Shifts")
+     * @ORM\ManyToOne(targetEntity="Engel\Bundle\AppBundle\Entity\Shift")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="shift_id", referencedColumnName="SID")
      * })
@@ -99,7 +99,7 @@ class NeededAngelTypes
     }
 
     /**
-     * @return Shifts
+     * @return Shift
      */
     public function getShift()
     {
@@ -107,7 +107,7 @@ class NeededAngelTypes
     }
 
     /**
-     * @param Shifts $shift
+     * @param Shift $shift
      */
     public function setShift($shift)
     {

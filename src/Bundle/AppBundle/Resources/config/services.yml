@@ -1,6 +1,15 @@
 
 services:
-  enge.api.controller.shifts:
+  engel.api.controllser.base:
+    abstract: true
+    class: Engel\Bundle\AppBundle\Controller\Api\BaseApiController
+    arguments: [ @fos_rest.view_handler ]
+    calls:
+      - [ setDoctrine, [ @doctrine ]]
+
+
+  engel.api.controller.shifts:
     class: Engel\Bundle\AppBundle\Controller\Api\ShiftsController
+    parent: engel.api.controllser.base
     calls:
       - [ setContainer, [ @service_container ] ]

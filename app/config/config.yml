@@ -66,6 +66,8 @@ doctrine:
         entity_managers:
             default:
                 auto_mapping: true
+                mappings:
+                    EngelAppBundle: ~
 
 # Swiftmailer Configuration
 swiftmailer:

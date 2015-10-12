@@ -3,19 +3,24 @@
 namespace Engel\Bundle\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
- * Shifts
+ * Shift
  *
  * @ORM\Table(name="Shifts", uniqueConstraints={@ORM\UniqueConstraint(name="PSID", columns={"PSID"})}, indexes={@ORM\Index(name="RID", columns={"RID"}), @ORM\Index(name="shifttype_id", columns={"shifttype_id"}), @ORM\Index(name="created_by_user_id", columns={"created_by_user_id"}), @ORM\Index(name="edited_by_user_id", columns={"edited_by_user_id"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Engel\Bundle\AppBundle\Repositories\ShiftsRepository")
+ *
+ * @Serializer\ExclusionPolicy("all")
  */
-class Shifts
+class Shift
 {
     /**
      * @var string
      *
      * @ORM\Column(name="title", type="text", length=65535, nullable=true)
+     *
+     * @Serializer\Expose
      */
     private $title;
 
@@ -23,6 +28,8 @@ class Shifts
      * @var integer
      *
      * @ORM\Column(name="start", type="integer", nullable=false)
+     *
+     * @Serializer\Expose
      */
     private $start;
 
@@ -30,6 +37,8 @@ class Shifts
      * @var integer
      *
      * @ORM\Column(name="end", type="integer", nullable=false)
+     *
+     * @Serializer\Expose
      */
     private $end;
 
@@ -67,6 +76,8 @@ class Shifts
      * @ORM\Column(name="SID", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     *
+     * @Serializer\Expose
      */
     private $sid;
 
@@ -97,8 +108,11 @@ class Shifts
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="shifttype_id", referencedColumnName="id")
      * })
+     *
+     * @Serializer\Expose
+     * @Serializer\SerializedName("shiftType")
      */
-    private $shifttype;
+    private $shiftType;
 
     /**
      * @var \Engel\Bundle\AppBundle\Entity\Room
@@ -107,6 +121,9 @@ class Shifts
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="RID", referencedColumnName="RID")
      * })
+     *
+     * @Serializer\Expose
+     * @Serializer\SerializedName("location")
      */
     private $rid;
 
@@ -273,17 +290,17 @@ class Shifts
     /**
      * @return Shifttypes
      */
-    public function getShifttype()
+    public function getShiftType()
     {
-        return $this->shifttype;
+        return $this->shiftType;
     }
 
     /**
-     * @param Shifttypes $shifttype
+     * @param Shifttypes $shiftType
      */
-    public function setShifttype($shifttype)
+    public function setShiftType($shiftType)
     {
-        $this->shifttype = $shifttype;
+        $this->shiftType = $shiftType;
     }
 
     /**

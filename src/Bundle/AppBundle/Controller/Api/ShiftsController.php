@@ -2,43 +2,42 @@
 
 namespace Engel\Bundle\AppBundle\Controller\Api;
 
-use FOS\RestBundle\Controller\FOSRestController;
+use Engel\Bundle\AppBundle\Entity\Shift;
+use Engel\Bundle\AppBundle\Repositories\ShiftsRepository;
 use FOS\RestBundle\Controller\Annotations as Route;
 use FOS\RestBundle\View\View;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @author Maximilian Berghoff <Maximilian.Berghoff@mayflower.de>
  */
-class ShiftsController extends FOSRestController
+class ShiftsController extends BaseApiController
 {
     /**
      * @Route\Get("shifts")
+     *
+     * @param Request $request
+     *
+     * @return Response
      */
-    public function getShiftsAction()
+    public function getShiftsAction(Request $request)
     {
-        $view = View::create([
-            [
-                "SID" => 1,
-                'title' => 'First shift in 1h',
-                'shiftType' => [
-                    'id' => 1,
-                    'name' => 'ShiftType 1',
-                ],
-                'start' => time() + 60*60*1,
-                'end' => time() + 60*60*3
-            ],
-            [
-                "SID" => 2,
-                'title' => 'First shift in 10h',
-                'shiftType' => [
-                    'id' => 2,
-                    'name' => 'ShiftType 2',
-                ],
-                'start' => time() + 60*60*10,
-                'end' => time() + 60*60*13
-            ],
-        ]);
+        $start = $request->query->has('start') ? $request->query->get('start') : null;
+        $end = $request->query->has('end') ? $request->query->get('end') : null;
+        $locations = $request->query->has('locations') ? $request->query->get('locations') : [];
+
+        if (null === $start) {
+            $start = time() - 24*60*60*10;
+        }
+        if (null === $end) {
+            $end = time() + 24*60*60*10;
+        }
+        /** @var ShiftsRepository $shiftsRepository */
+        $shiftsRepository = $this->doctrine->getRepository(Shift::class);
+        $shifts = $shiftsRepository->findShifts($start, $end, $locations);
+
+        $view = View::create($shifts);
 
         return $this->handleView($view);
     }
@@ -52,27 +51,10 @@ class ShiftsController extends FOSRestController
      */
     public function getShiftAction($id)
     {
-        $first = [
-            "SID" => 1,
-            'title' => 'First shift in 1h',
-            'shiftType' => [
-                'id' => 1,
-                'name' => 'ShiftType 1',
-            ],
-            'start' => time() + 60 * 60 * 1,
-            'end' => time() + 60 * 60 * 3
-        ];
-        $second = [
-            "SID" => 2,
-            'title' => 'First shift in 10h',
-            'shiftType' => [
-                'id' => 2,
-                'name' => 'ShiftType 2',
-            ],
-            'start' => time() + 60 * 60 * 10,
-            'end' => time() + 60 * 60 * 13
-        ];
-        $view = View::create(($id == 1 ? $first : $second));
+        /** @var ShiftsRepository $shiftsRepository */
+        $shiftsRepository = $this->doctrine->getRepository(Shift::class);
+        $shift = $shiftsRepository->find($id);
+        $view = View::create($shift);
 
         return $this->handleView($view);
     }
