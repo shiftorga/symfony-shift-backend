@@ -9,11 +9,17 @@ module angularShift.shifts {
         private events: Array<FullCalendar.EventObject> = [];
         private uiCalendarConfig: FullCalendar.Options;
         private eventSources: Array<FullCalendar.EventSource>;
-        private shiftsService: angularShift.shiftEntries.ShiftEntriesService;
+        private shiftsService: ShiftsService;
         private converter: ShiftEventConverter;
         private $state;
 
-        constructor(uiCalendarConfig, $scope, shiftsService: angularShift.shiftEntries.ShiftEntriesService, converter: ShiftEventConverter, $state) {
+        constructor(
+            uiCalendarConfig,
+            $scope,
+            shiftsService: ShiftsService,
+            converter: ShiftEventConverter,
+            $state
+        ) {
             this.date = new Date();
             this.d = this.date.getDate();
             this.m = this.date.getMonth();
@@ -38,7 +44,19 @@ module angularShift.shifts {
                         this.$state.go('shifts.show', {id: event.shiftValues.SID});
                     },
                     eventDrop: $scope.alertOnDrop,
-                    eventResize: $scope.alertOnResize
+                    eventResize: $scope.alertOnResize,
+                    viewRender: (view, element) => {
+                        var params: GetShiftParameter = {
+                            start: view.start.get()._d.getTime()/1000,
+                            end: view.end.get()._d.getTime()/1000
+                        };
+                        this.shiftsService.getAll(params).then((data) => {
+                            _.each(data, (shift: ShiftInterface) => {
+                                this.events.push(this.converter.toEvent(shift))
+                            });
+                        });
+                        return true;
+                    }
                 }
             };
 
@@ -47,11 +65,6 @@ module angularShift.shifts {
 
         init () {
             this.eventSources = [this.events];
-            this.shiftsService.getAll().then((data) => {
-                _.each(data, (shift: ShiftInterface) => {
-                    this.events.push(this.converter.toEvent(shift))
-                });
-            });
         }
 
     }

@@ -84,7 +84,7 @@ class ShiftsControllerTest extends \PHPUnit_Framework_TestCase
         $request = new Request();
         $request->setMethod('GET');
         $request->query->add(['start' => $expectedStart, 'end' => $expectedEnd, 'locations' => $expectedLocations]);
-        $shifts = [];
+        $shifts = [['SID' => 1]];
         $view = View::create($shifts);
 
         // expected method call
@@ -97,10 +97,31 @@ class ShiftsControllerTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('handle')
             ->with($this->equalTo($view))
-            ->will($this->returnValue('[]'));
+            ->will($this->returnValue('[{"SID": 1}]'));
 
         $result = $this->controller->getShiftsAction($request);
 
-        $this->assertEquals('[]', $result);
+        $this->assertEquals('[{"SID": 1}]', $result);
+    }
+
+    public function testGetShiftReturnTheShiftReturnedByDoctrine()
+    {
+        $shift = new \stdClass();
+        $shift->SID = 1;
+        $this->repository
+            ->expects($this->once())
+            ->method('find')
+            ->with($this->equalTo(1))
+            ->will($this->returnValue($shift));
+        $view = View::create($shift);
+        $this->viewHandler
+            ->expects($this->once())
+            ->method('handle')
+            ->with($this->equalTo($view))
+            ->will($this->returnValue('{"SID": 1}'));
+
+        $result = $this->controller->getShiftAction(1);
+
+        $this->assertEquals('{"SID": 1}', $result);
     }
 }

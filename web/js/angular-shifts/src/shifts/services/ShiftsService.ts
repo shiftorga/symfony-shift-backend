@@ -2,6 +2,11 @@
 
 module angularShift.shifts {
     'use strict';
+    export interface GetShiftParameter {
+        start: number;
+        end: number;
+        locations?: Array<number>;
+    }
 
     export class ShiftsService
     {
@@ -36,7 +41,7 @@ module angularShift.shifts {
          *
          * @returns $bluebird
          */
-        getAll (params = []) {
+        getAll (params: GetShiftParameter) {
             return this.Resource.one().customGET('', params);
         }
 

@@ -19,7 +19,6 @@ var angularShift;
              * @returns $bluebird
              */
             ShiftsService.prototype.getAll = function (params) {
-                if (params === void 0) { params = []; }
                 return this.Resource.one().customGET('', params);
             };
             /**

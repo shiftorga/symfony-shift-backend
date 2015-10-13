@@ -9,9 +9,9 @@ module angularShift.shifts {
     export class ShiftEventConverter {
         public toEvent (shift: ShiftInterface): shiftEventObject {
             var startDate = new Date();
-            startDate.setMilliseconds(shift.start);
+            startDate.setTime(shift.start*1000);
             var endDate = new Date();
-            endDate.setMilliseconds(shift.end);
+            endDate.setTime(shift.end*1000);
             return  {
                 title: !_.isUndefined(shift.title) ?  shift.title + '(' + shift.shiftType.name +  ')' : shift.shiftType.name,
                 start: startDate,

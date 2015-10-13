@@ -1,4 +1,4 @@
 engel_api_shifts:
   type: rest
-  resource: enge.api.controller.shifts
+  resource: engel.api.controller.shifts
   name_prefix: api_

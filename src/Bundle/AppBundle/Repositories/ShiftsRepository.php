@@ -13,8 +13,7 @@ class ShiftsRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('shift');
         $andDate = $qb->expr()->andX();
-        $andDate->add($qb->expr()->gt('shift.start', $start));
-        $andDate->add($qb->expr()->lt('shift.end', $end));
+        $andDate->add($qb->expr()->between('shift.start', $start, $end));
         $qb->where($andDate);
 
         return $qb->getQuery()->getResult();

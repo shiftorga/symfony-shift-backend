@@ -29,19 +29,25 @@ var angularShift;
                             _this.$state.go('shifts.show', { id: event.shiftValues.SID });
                         },
                         eventDrop: $scope.alertOnDrop,
-                        eventResize: $scope.alertOnResize
+                        eventResize: $scope.alertOnResize,
+                        viewRender: function (view, element) {
+                            var params = {
+                                start: view.start.get()._d.getTime() / 1000,
+                                end: view.end.get()._d.getTime() / 1000
+                            };
+                            _this.shiftsService.getAll(params).then(function (data) {
+                                _.each(data, function (shift) {
+                                    _this.events.push(_this.converter.toEvent(shift));
+                                });
+                            });
+                            return true;
+                        }
                     }
                 };
                 this.init();
             }
             ShiftsOnCalendarController.prototype.init = function () {
-                var _this = this;
                 this.eventSources = [this.events];
-                this.shiftsService.getAll().then(function (data) {
-                    _.each(data, function (shift) {
-                        _this.events.push(_this.converter.toEvent(shift));
-                    });
-                });
             };
             return ShiftsOnCalendarController;
         })();
