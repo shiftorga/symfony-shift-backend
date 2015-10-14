@@ -2,3 +2,8 @@ engel_api_shifts:
   type: rest
   resource: engel.api.controller.shifts
   name_prefix: api_
+
+engel_api_locations:
+  type: rest
+  resource: engel.api.controller.locations
+  name_prefix: api_

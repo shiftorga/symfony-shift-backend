@@ -7,6 +7,12 @@ module angularShift.shifts {
         public shift: ShiftInterface;
         private notificationService: angularShift.utils.NotificationService;
         private confirmation: angularShift.utils.ConfirmationService
+        public dateValues = {
+            dateStart: null,
+            dateEnd: null,
+            timeStart: null,
+            timeEnd: null
+        };
 
         constructor (
             $state,
@@ -26,6 +32,12 @@ module angularShift.shifts {
             var shiftid = this.$state.params.id;
             this.shiftsService.getById(shiftid).then((shift: ShiftInterface) => {
                 this.shift = shift;
+                this.dateValues = {
+                    dateStart: moment(shift.start, 'X').format('YYYY-M-DD'),
+                    dateEnd: moment(shift.end, 'X').format('YYYY-M-DD'),
+                    timeStart: moment(shift.start, 'X').format('HH:mm'),
+                    timeEnd: moment(shift.end, 'X').format('HH:mm')
+                }
             });
         }
 

@@ -13,3 +13,9 @@ services:
     parent: engel.api.controllser.base
     calls:
       - [ setContainer, [ @service_container ] ]
+
+  engel.api.controller.locations:
+    class: Engel\Bundle\AppBundle\Controller\Api\LocationsController
+    parent: engel.api.controllser.base
+    calls:
+      - [ setContainer, [ @service_container ] ]

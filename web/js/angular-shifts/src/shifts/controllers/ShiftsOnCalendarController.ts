@@ -41,7 +41,7 @@ module angularShift.shifts {
                         right: 'today prev,next'
                     },
                     eventClick: (event) => {
-                        this.$state.go('shifts.show', {id: event.shiftValues.SID});
+                        this.$state.go('shifts.show', {id: event.shiftValues.sid});
                     },
                     eventDrop: $scope.alertOnDrop,
                     eventResize: $scope.alertOnResize,
@@ -74,7 +74,8 @@ module angularShift.shifts {
         '$scope',
         'ShiftsService',
         'ShiftsEventConverterService',
-        '$state'
+        '$state',
+        'LocationsService'
     ];
 
     angular.module('angularShift.shifts').controller('ShiftsOnCalendarController', ShiftsOnCalendarController);

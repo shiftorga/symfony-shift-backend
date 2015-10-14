@@ -594,7 +594,7 @@ var angularShift;
                             right: 'today prev,next'
                         },
                         eventClick: function (event) {
-                            _this.$state.go('shifts.show', { id: event.shiftValues.SID });
+                            _this.$state.go('shifts.show', { id: event.shiftValues.sid });
                         },
                         eventDrop: $scope.alertOnDrop,
                         eventResize: $scope.alertOnResize
@@ -754,7 +754,7 @@ var angularShift;
              * @param shift
              */
             ShiftsService.prototype.remove = function (shift) {
-                return this.Resource.one(shift.SID).remove();
+                return this.Resource.one(shift.sid).remove();
             };
             /**
              * Will save an existing shift or create a new one.
@@ -762,7 +762,7 @@ var angularShift;
              * @param shift
              */
             ShiftsService.prototype.save = function (shift) {
-                var id = shift.SID;
+                var id = shift.sid;
                 var promise;
                 if (typeof id === 'undefined' || id === null) {
                     promise = this.Resource.post(shift);

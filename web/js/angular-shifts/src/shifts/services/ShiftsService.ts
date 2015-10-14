@@ -61,7 +61,7 @@ module angularShift.shifts {
          * @param shift
          */
         remove (shift: ShiftInterface) {
-            return this.Resource.one(shift.SID).remove();
+            return this.Resource.one(shift.sid).remove();
         }
 
         /**
@@ -70,7 +70,7 @@ module angularShift.shifts {
          * @param shift
          */
         save (shift: ShiftInterface) {
-            var id = shift.SID;
+            var id = shift.sid;
             var promise;
 
             if (typeof id === 'undefined' || id === null) {

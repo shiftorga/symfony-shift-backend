@@ -15,11 +15,16 @@
     {{ parent() }}
     <link rel="stylesheet" href="components/fullcalendar/dist/fullcalendar.css"/>
     <link rel="stylesheet" href="components/angular-toastr/dist/angular-toastr.css" />
+    <link rel="stylesheet" href="{{ asset('components/bootstrap-multiselect/dist/css/bootstrap-multiselect.css') }}" />
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="components/moment/min/moment.min.js"></script>
+
+    <script type="text/javascript" src="{{ asset('components/countdown/dest/jquery.countdown.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('components/moment-countdown/dist/moment-countdown.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('components/bootstrap-multiselect/dist/js/bootstrap-multiselect.js') }}"></script>
+
     <script type="text/javascript" src="components/angular/angular.js"></script>
     <script type="text/javascript" src="components/angular-ui-router/release/angular-ui-router.js"></script>
     <script type="text/javascript" src="components/angular-ui-calendar/src/calendar.js"></script>
@@ -29,7 +34,6 @@
     <script type="text/javascript" src="components/restangular/dist/restangular.min.js"></script>
     <script type="text/javascript" src="components/lodash/dist/lodash.min.js"></script>
     <script type="text/javascript" src="components/angular-toastr/dist/angular-toastr.tpls.min.js"></script>
-    <script type="text/javascript" src="components/moment/min/moment-with-locales.min.js"></script>
     <script type="text/javascript" src="components/bootbox/bootbox.js"></script>
 
     <script src="js/angular-shifts/src/shiftEntries/shfitEntries_app.js"></script>
@@ -43,11 +47,14 @@
     <script type="application/javascript" src="js/angular-shifts/src/shifts/controllers/ShiftsOnCalendarController.js"></script>
     <script type="application/javascript" src="js/angular-shifts/src/shifts/controllers/ShiftsEditController.js"></script>
     <script type="application/javascript" src="js/angular-shifts/src/shifts/controllers/ShiftsShowController.js"></script>
+    <script type="application/javascript" src="{{ asset('js/angular-shifts/src/shifts/directives/ListFilterDirective.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('js/angular-shifts/src/shifts/controllers/ListFilterController.js') }}"></script>
 
     <script type="application/javascript" src="js/angular-shifts/src/shiftEntries/ShiftEntriesService.js"></script>
 
     <script type="application/javascript" src="js/angular-shifts/src/shiftTypes/ShiftTypeEditController.js"></script>
     <script type="application/javascript" src="js/angular-shifts/src/shiftTypes/ShiftTypesService.js"></script>
+
 
     <script type="application/javascript" src="js/angular-shifts/src/locations/LocationEditController.js"></script>
     <script type="application/javascript" src="js/angular-shifts/src/locations/LocationsService.js"></script>

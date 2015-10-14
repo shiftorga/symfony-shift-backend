@@ -5,6 +5,12 @@ var angularShift;
     (function (shifts) {
         var ShiftsShowController = (function () {
             function ShiftsShowController($state, shiftsService, notificationService, confirmationService) {
+                this.dateValues = {
+                    dateStart: null,
+                    dateEnd: null,
+                    timeStart: null,
+                    timeEnd: null
+                };
                 this.shiftsService = shiftsService;
                 this.$state = $state;
                 this.notificationService = notificationService;
@@ -16,6 +22,12 @@ var angularShift;
                 var shiftid = this.$state.params.id;
                 this.shiftsService.getById(shiftid).then(function (shift) {
                     _this.shift = shift;
+                    _this.dateValues = {
+                        dateStart: moment(shift.start, 'X').format('YYYY-M-DD'),
+                        dateEnd: moment(shift.end, 'X').format('YYYY-M-DD'),
+                        timeStart: moment(shift.start, 'X').format('HH:mm'),
+                        timeEnd: moment(shift.end, 'X').format('HH:mm')
+                    };
                 });
             };
             ShiftsShowController.prototype.countShiftEntriesForAngelType = function (shift, angelTypeId) {

@@ -26,7 +26,7 @@ var angularShift;
                             right: 'today prev,next'
                         },
                         eventClick: function (event) {
-                            _this.$state.go('shifts.show', { id: event.shiftValues.SID });
+                            _this.$state.go('shifts.show', { id: event.shiftValues.sid });
                         },
                         eventDrop: $scope.alertOnDrop,
                         eventResize: $scope.alertOnResize,
@@ -57,7 +57,8 @@ var angularShift;
             '$scope',
             'ShiftsService',
             'ShiftsEventConverterService',
-            '$state'
+            '$state',
+            'LocationsService'
         ];
         angular.module('angularShift.shifts').controller('ShiftsOnCalendarController', ShiftsOnCalendarController);
     })(shifts = angularShift.shifts || (angularShift.shifts = {}));

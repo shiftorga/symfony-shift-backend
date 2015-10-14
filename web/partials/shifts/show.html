@@ -2,6 +2,7 @@
     <div class="col-md-12">
         <h1>{{ shiftShow.shift.shiftType.name }}
             <small class="moment-countdown" data-timestamp="{{ shiftShow.shift.start }}"></small>
+
         </h1>
         <div class="form-group">
             <div class="btn-group">
@@ -23,14 +24,14 @@
             <div class="col-sm-3 col-xs-6"><h4>Title</h4>
             <p class="lead">{{ shiftShow.shift.title}}</p></div>
             <div class="col-sm-3 col-xs-6"><h4>Start</h4>
-                <p class="lead text-success">
-                    <span class="glyphicon glyphicon-calendar"></span> 2015-10-06<br>
-                    <span class="glyphicon glyphicon-time"></span> 00:00
+                <p class="lead">
+                    <span class="glyphicon glyphicon-calendar"></span> {{ shiftShow.dateValues.dateStart }}<br>
+                    <span class="glyphicon glyphicon-time"></span> {{ shiftShow.dateValues.timeStart }}
                 </p></div>
             <div class="col-sm-3 col-xs-6"><h4>End</h4>
                 <p class="lead">
-                    <span class="glyphicon glyphicon-calendar"></span> 2015-10-06<br>
-                    <span class="glyphicon glyphicon-time"></span> 20:00
+                    <span class="glyphicon glyphicon-calendar"></span> {{ shiftShow.dateValues.dateEnd }}<br>
+                    <span class="glyphicon glyphicon-time"></span> {{ shiftShow.dateValues.timeEnd }}
                 </p></div>
             <div class="col-sm-3 col-xs-6"><h4>Location</h4>
             <p class="lead"><span class="glyphicon glyphicon-map-marker"></span> {{ shiftShow.shift.location.name }}</p></div>

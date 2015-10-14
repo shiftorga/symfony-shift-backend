@@ -10,4 +10,5 @@
 /// <reference path='../typings/bootbox/bootbox.d.ts' />
 /// <reference path='utils/ConfirmationService.ts' />
 /// <reference path='utils/NotificationService.ts' />
+/// <reference path='../typings/moment/moment.d.ts' />
 //# sourceMappingURL=_all.js.map

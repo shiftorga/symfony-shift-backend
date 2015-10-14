@@ -6,7 +6,7 @@ module angularShift.shifts {
      * The interface for the shifts we are getting from the api.
      */
     export interface ShiftInterface {
-        SID: number;
+        sid: number;
         title: string;
         shiftType: angularShift.shiftTypes.ShiftTypeInterface;
         neededAngelTypes: angularShift.neededAngels.NeededAngelTypeInterface;
@@ -14,8 +14,8 @@ module angularShift.shifts {
         end: number;
         location: angularShift.locations.LocationInterface;
         shiftEntries: Array<angularShift.shiftEntries.ShiftEntryInterface>
-        URL: string;
-        PSID : number;
+        url: string;
+        psid : number;
         created_by_user_id: number;
         created_at_timestamp: number;
         edited_by_user_id: number;
