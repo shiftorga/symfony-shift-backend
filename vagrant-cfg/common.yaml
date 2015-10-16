@@ -38,15 +38,15 @@ profile::webserver::apache: false
 profile::interpreter::php: true
 profile::interpreter::hhvm: false
 
-profile::javascript::nodejs: false
+profile::javascript::nodejs: true
 profile::javascript::less: false
 
 profile::frontend::compass: false
-profile::frontend::bower: false
+profile::frontend::bower: true
 profile::frontend::coffee_script: false
 profile::frontend::grunt: false
 
-profile::app::symfony2: false
+profile::app::symfony2: true
 profile::app::yii1: false
 profile::app::yii2: false
 profile::app::zend_framework1: false
