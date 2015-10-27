@@ -13,32 +13,32 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="components/fullcalendar/dist/fullcalendar.css"/>
-    <link rel="stylesheet" href="components/angular-toastr/dist/angular-toastr.css" />
+    <link rel="stylesheet" href="{{ asset('components/fullcalendar/dist/fullcalendar.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('components/angular-toastr/dist/angular-toastr.css') }}" />
     <link rel="stylesheet" href="{{ asset('components/bootstrap-multiselect/dist/css/bootstrap-multiselect.css') }}" />
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
 
-    <script type="text/javascript" src="{{ asset('components/countdown/dest/jquery.countdown.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('components/countdown/dest/countdown.js') }}"></script>
     <script type="application/javascript" src="{{ asset('components/moment-countdown/dist/moment-countdown.js') }}"></script>
+
     <script type="text/javascript" src="{{ asset('components/bootstrap-multiselect/dist/js/bootstrap-multiselect.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('components/angular/angular.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('components/angular-ui-router/release/angular-ui-router.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('components/angular-ui-calendar/src/calendar.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('components/angular-toastr/dist/angular-toastr.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('components/fullcalendar/dist/fullcalendar.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('components/fullcalendar/dist/gcal.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('components/restangular/dist/restangular.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('components/lodash/dist/lodash.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('components/angular-toastr/dist/angular-toastr.tpls.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('components/bootbox/bootbox.js') }}"></script>
 
-    <script type="text/javascript" src="components/angular/angular.js"></script>
-    <script type="text/javascript" src="components/angular-ui-router/release/angular-ui-router.js"></script>
-    <script type="text/javascript" src="components/angular-ui-calendar/src/calendar.js"></script>
-    <script type="text/javascript" src="components/angular-toastr/dist/angular-toastr.min.js"></script>
-    <script type="text/javascript" src="components/fullcalendar/dist/fullcalendar.js"></script>
-    <script type="text/javascript" src="components/fullcalendar/dist/gcal.js"></script>
-    <script type="text/javascript" src="components/restangular/dist/restangular.min.js"></script>
-    <script type="text/javascript" src="components/lodash/dist/lodash.min.js"></script>
-    <script type="text/javascript" src="components/angular-toastr/dist/angular-toastr.tpls.min.js"></script>
-    <script type="text/javascript" src="components/bootbox/bootbox.js"></script>
-
-    <script src="js/angular-shifts/src/shiftEntries/shfitEntries_app.js"></script>
-    <script src="js/angular-shifts/src/shiftTypes/shfitTypes_app.js"></script>
-    <script src="js/angular-shifts/src/shifts/shifts_app.js"></script>
+    <script src="{{ asset('js/angular-shifts/src/shiftEntries/shfitEntries_app.js') }}"></script>
+    <script src="{{ asset('js/angular-shifts/src/shiftTypes/shfitTypes_app.js') }}"></script>
+    <script src="{{ asset('js/angular-shifts/src/shifts/shifts_app.js') }}"></script>
     <script src="js/angular-shifts/src/locations/locations_app.js"></script>
     <script src="js/angular-shifts/src/app.js"></script>
 
