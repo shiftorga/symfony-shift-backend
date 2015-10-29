@@ -1,0 +1,12 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: engelsystem
+    database_user: engelsystem
+    database_password: engelsystem
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    secret: 3bbb2ac0ecdaa6eb0273fe4aa3d6c1aa647c9dbb

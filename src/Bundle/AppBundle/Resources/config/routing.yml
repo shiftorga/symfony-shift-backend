@@ -1,0 +1,7 @@
+engel_app_homepage:
+    path: /hello/{name}
+    defaults: { _controller: EngelAppBundle:Default:index }
+
+engel_app_portal_user_shifts:
+    path: /user_shifts
+    defaults: { _controller: EngelAppBundle:Portal:UserShifts}
