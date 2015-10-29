@@ -59,7 +59,15 @@ doctrine:
         user:     "%database_user%"
         password: "%database_password%"
         charset:  UTF8
-
+        mapping_types:
+            enum: string
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        entity_managers:
+            default:
+                auto_mapping: true
+                mappings:
+                    EngelAppBundle: ~
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -68,3 +76,11 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+fos_rest:
+  routing_loader:
+    default_format: json
+    include_format: false
+  serializer:
+    serialize_null: true
+  param_fetcher_listener: true

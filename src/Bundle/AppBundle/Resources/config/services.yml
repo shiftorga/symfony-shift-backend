@@ -1,6 +1,21 @@
 
 services:
-    engel.app.listener.legacy_app_on_route_not_found:
-        class: Engel\Bundle\AppBundle\Listener\LegacyApplicationOnRouteNotFoundListener
-        tags:
-            - { name: kernel.event_listener, event: kernel.exception, method: onHTTPNotFoundException }
+  engel.api.controllser.base:
+    abstract: true
+    class: Engel\Bundle\AppBundle\Controller\Api\BaseApiController
+    arguments: [ @fos_rest.view_handler ]
+    calls:
+      - [ setDoctrine, [ @doctrine ]]
+
+
+  engel.api.controller.shifts:
+    class: Engel\Bundle\AppBundle\Controller\Api\ShiftsController
+    parent: engel.api.controllser.base
+    calls:
+      - [ setContainer, [ @service_container ] ]
+
+  engel.api.controller.locations:
+    class: Engel\Bundle\AppBundle\Controller\Api\LocationsController
+    parent: engel.api.controllser.base
+    calls:
+      - [ setContainer, [ @service_container ] ]
