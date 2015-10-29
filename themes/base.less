@@ -1,0 +1,233 @@
+@import "../vendor/bootstrap/less/bootstrap";
+
+@icon-font-path: "../fonts/";
+
+body {
+  padding-top: 50px;
+}
+
+.footer a {
+  color: @text-muted;
+}
+
+#shifts {
+  td {
+    &.free {
+      border: 1px solid @brand-danger;
+      .bg-danger();
+    }
+    &.occupied {
+      border: 1px solid @brand-success;
+      .bg-success();
+    }
+    &.collides {
+      border: 1px solid @brand-warning;
+      .bg-warning();
+    }
+    &.own {
+      border: 1px solid @gray-light;
+    }
+  }
+}
+
+.row-day {
+  border-top: 2px solid @gray-light;
+}
+
+.row-header {
+  min-width: 90px;
+}
+
+.space-top {
+  margin-top: 15px;
+}
+
+.messages {
+  &:focus {
+    outline: none;
+  }
+  a:focus {
+    outline: none;
+  }
+}
+
+.messages span.text-danger {
+  animation: pulse 1s infinite;
+  -webkit-animation: pulse 1s infinite;
+  -moz-animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+     transform: rotate(0deg);
+  }
+  10% {
+     transform: rotate(5deg) translateY(-2px);
+  }
+  20% {
+     transform: rotate(-5deg);
+  }
+    30% {
+     transform: rotate(5deg) translateY(-2px);;
+  }
+    40% {
+     transform: rotate(-5deg);
+  }
+    50% {
+     transform: rotate(0deg) translateY(-2px);
+  }
+  75% {
+    transform: rotate(0deg) translateY(0px);
+  }
+}
+
+@-webkit-keyframes pulse {
+  0% {
+     transform: rotate(0deg);
+  }
+  10% {
+     transform: rotate(5deg) translateY(-2px);
+  }
+  20% {
+     transform: rotate(-5deg);
+  }
+    30% {
+     transform: rotate(5deg) translateY(-2px);
+  }
+    40% {
+     transform: rotate(-5deg);
+  }
+    50% {
+     transform: rotate(0deg) translateY(-2px);
+  }
+  75% {
+    transform: rotate(0deg) translateY(0px);
+  }
+}
+
+@-moz-keyframes pulse {
+  0% {
+     transform: rotate(0deg);
+  }
+  10% {
+     transform: rotate(5deg) translateY(-2px);
+  }
+  20% {
+     transform: rotate(-5deg);
+  }
+    30% {
+     transform: rotate(5deg) translateY(-2px);
+  }
+    40% {
+     transform: rotate(-5deg);
+  }
+    50% {
+     transform: rotate(0deg) translateY(-2px);
+  }
+  75% {
+    transform: rotate(0deg) translateY(0px);
+  }
+}
+
+// Dashboard layout
+.forecast {
+  margin-bottom: 30px;
+}
+
+.blocks {
+  margin-bottom: 30px;
+}
+
+.job-list, .news {
+  .make-sm-column(12);
+  .make-md-column(4);
+  .make-lg-column(4);
+}
+
+.talks {
+  .make-sm-column(12);
+  .make-md-column(4);
+  .make-lg-column(4);
+}
+
+.upcoming-shifts, .upcoming-night-shifts, .currently-working, .hours-worked {
+  .make-sm-column(6);
+  .make-md-column(3);
+  .make-lg-column(3);
+  .number {
+    font-size: 80px;
+    font-weight: 200;
+  }
+  .description {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  text-align: center;
+  font-weight: 100;
+}
+
+
+.job {
+  header {
+    font-size: 20px;
+    .location {
+      margin-left: 10px;
+    }
+  }
+  .job-description {
+    font-size: 18px;
+    font-weight: 100;
+  }
+  overflow: hidden;
+}
+
+.clock {
+  font-size: 70px;
+  text-align: center;
+}
+
+/* makes table elements in User-Edit-Form behave like bootstrap elements
+   (quick-fix! html should get refactored) */
+form.admin-user-form td {
+  clear: both;
+  padding: 0 0 15px 0;
+}
+
+form.admin-user-form input[type="radio"] {
+  margin-left: 15px;
+
+  &:first-child {
+    margin-left: 0;
+  }
+}
+
+/* Shift filters */
+.selection.user-shift-filter {
+  .checkbox {
+    clear: both;
+  }
+}
+
+.shift-selected-filter-list {
+  margin: 0;
+  padding: 0 0 5px 0;
+  list-style: none;
+
+  li {
+    position: relative;
+    padding: 0 0 0 11px;
+  }
+
+  li:before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    content: '- ';
+  }
+}
+
+@media all and (max-width: @screen-sm) {
+  .selection.user-shift-filter {
+    margin-top: 25px;
+  }
+}
