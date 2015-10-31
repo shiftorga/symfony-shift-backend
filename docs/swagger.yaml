@@ -1,0 +1,356 @@
+swagger: '2.0'
+info:
+  title: Engelsystem API
+  description: API to use user shifts on the engelsystem
+  version: 1.0.0
+host: engel-muccc.de
+schemes:
+  - https
+basePath: /api/v1
+produces:
+  - application/json
+paths:
+  /shifts:
+    get:
+      summary: Shifts
+      description: |
+        Get the list of shifts with this api endpoint.
+      tags:
+        - Shifts
+      responses:
+        '200':
+          description: An array of shifts
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/shift'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary: Create a new shift
+      tags:
+        - Shifts
+      responses:
+        201:
+          description: Returns the complete shift with its new location (id where persisted)
+          schema:
+            type: object
+            $ref: '#/definitions/shift'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+            
+  /shifts/{id}:
+    get:
+      summary: GET Shift
+      description: |
+        Get a single shift with this api endpoint. An existing shift id must be given
+      tags:
+        - Shifts
+      responses:
+        '200':
+          description: A single shift
+          schema:
+            type: object
+            $ref: '#/definitions/shift'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+      parameters:
+      - name: id
+        in: path
+        type: string
+        description: The id of a shift
+        required: true
+    patch:
+      summary: Patch information to a shift
+      description: Change specific values of a shift
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            $ref: '#/definitions/shift'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+      parameters:
+      - name: title
+        in: query
+        required: false
+        type: string
+        description: "The new title to set."
+      - name: start
+        in: query
+        required: false
+        type: string
+        description: "The new start timestamp to set."
+      - name: end
+        in: query
+        required: false
+        type: string
+        description: "The new end timestamp to set"
+    
+    
+  /shift_types:
+    get:
+      summary: Get all shift types
+      description: |
+        A shift type is a kind of a grouping or category for a shift. Shifts without a name/title will get the 
+        shifts type's name as label.
+      tags:
+        - ShiftTypes
+      responses:
+        '200':
+          description: An array of shift types
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/shiftType'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary: Post a shift type for a create new action.
+      tags:
+        - ShiftTypes
+      responses:
+        '201':
+          description: Returns the new shift type with its location.
+          schema:
+            type: object
+            $ref: '#/definitions/shiftType'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+      
+
+  /locations:
+    get:
+      summary: Locations
+      description: |
+        A location describes a room or a location where the shift takes place each location can be defined with
+        a base set of needed angelt types.
+      tags:
+        - Locations
+      responses:
+        '200':
+          description: An array of locations
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/location'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary: Post a location for a create new action.
+      tags:
+        - Locations
+      responses:
+        '201':
+          description: Returns the new location with its location.
+          schema:
+            type: object
+            $ref: '#/definitions/location'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+        
+  /needed_angel_types:
+    get:
+      summary: Needed angel types
+      description: |
+        A needed angel type is an entity which describes the amount of angels
+        needed on a location or a shift.
+      tags:
+        - NeededAngelTypes
+      responses:
+        '200':
+          description: An array of needed angel types
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/neededAngelType'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary: Post a needed angel type entity.
+      description: |
+        "By creating a needed angel type entity a you can decide to to add it to
+        a location or a shift. Doing so those entities will have an extra item 
+        in their neededAngelTypes"
+      tags:
+        - Locations
+      responses:
+        '201':
+          description: Returns the new location with its location.
+          schema:
+            type: object
+            $ref: '#/definitions/location'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+            
+definitions:
+  shift:
+    type: object
+    properties:
+      SID:
+        type: string
+        description: 'Unique identifier representing a specific shift'
+      shiftType:
+        type: object
+        $ref: '#/definitions/shiftType'
+      neededAngelTypes:
+        type: array
+        items:
+          $ref: '#/definitions/neededAngelType'
+      title:
+        type: string
+        description: Display name of shift. Does not need to be given.
+      start:
+        type: string
+        description: The timestamp for the start time
+      end:
+        type: string
+        description: "The timestamp for the end time."
+      location: 
+        type: object
+        $ref: '#/definitions/location' 
+      shiftEntries:
+        type: array
+        items:
+          $ref: '#/definitions/shiftEntry'
+      URL:
+        type: string
+      PSID :
+        type: number
+      created_by_user_id:
+        type: number
+        description: The id of the user that created the shift.
+      created_at_timestamp:
+        type: string
+        description: The timestamp when the shift was created
+      edited_by_user_id:
+        type: number
+        description: Id of the last editing user.
+      edited_at_timestamp:
+        type: string
+        description: The timestamp of the last edit.
+        
+  shiftEntry:
+    type: object
+    properties:
+      id:
+        type: number
+      shift:
+        type: object
+        $ref: '#/definitions/shift'
+      angelType:
+        type: object
+        $ref: '#/definitions/angelType'
+      UID:
+        type: number
+      Comment:
+        type: string
+      freeload_comment:
+        type: string
+      freeload:
+        type: number
+
+  shiftType:
+    type: object
+    properties:
+      id:
+        type: number
+        description: 'Unique identifier for the shift type.'
+      name:
+        type: string
+        description: "The name of the shift type. Used as tilte for shifts without any title defined."
+      angelType:
+        type: object
+        $ref: '#/definitions/angelType' 
+      description:
+        type: string
+        description: A short description about that shift type.
+        
+  angelType:
+    type: object
+    properties:
+      id:
+        type: number
+        description: 'The unique identifier for the angel type'
+      name:
+        type: string
+        description: 'A name to describe a angel type.'
+      restricted:
+        type: number
+      description:
+        type: string
+        description: 'A description or hints for the angel type.'
+    
+  location:
+    type: object
+    properties:
+        RID:
+          type: number
+          description: 'Unique identifier for the location/room'
+        Name: 
+          type: string
+          description: 'A name of the location/room'
+        Man:
+          type: string
+        FromPentabarf:
+          type: string
+        show:
+          type: boolean
+        Number:
+          type: string
+          description: 'In case of a room the number is the room number'
+        neededAngelTypes:
+          type: array
+          items:
+            $ref: '#/definitions/neededAngelType'
+  
+  neededAngelType:
+    type: object
+    properties:
+      id:
+        type: number
+        description: 'A unique identifier for the needed angel type.'
+      location:
+        type: object
+        $ref: '#/definitions/location'
+      shift:
+        type: object
+        $ref: '#/definitions/shift'  
+      angelType:
+        type: object
+        $ref: '#/definitions/angelType'
+      count:
+        type: number
+        description: 'The count of angels needed for the location at all or a specific shift'
+    
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      fields:
+        type: string
