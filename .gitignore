@@ -6,3 +6,13 @@ _vimrc_local.vim
 .sass-cache
 config/config.php
 test/coverage
+.vagrant
+/vendor/
+/web/assets/
+/web/bundles/
+/app/cache
+/app/logs
+/node_modules/
+web/components
+web/partials
+web/css

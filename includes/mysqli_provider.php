@@ -5,8 +5,9 @@
  */
 function sql_close() {
   global $sql_connection;
-
-  return $sql_connection->close();
+  if (isset ($sql_connection)) {
+      return $sql_connection->close();
+  }
 }
 
 /**
@@ -193,13 +194,40 @@ function sql_num_query($query) {
   return sql_query($query)->num_rows;
 }
 
+/**
+ * Check whether Query gives non zero result lines (ignore possible Errors!)
+ * (useful for deployment)
+ * @param $query
+ * return bool whether the query executed and yielded a nonzero result
+ */
+function sql_check_for_result($query)
+{
+    // we don't want errors since we just wanna check if this works at all
+    // this way we can use it to determine whether a ie. column already exists with just one describe)
+    global $sql_connection;
+
+    $result = @$sql_connection->query($query);
+    if (isset($result)
+        && isset($result->num_rows)
+        && is_numeric($result->num_rows)
+        && $result->num_rows > 0
+    ) {
+        return true;
+    }
+    return false;
+}
+
 function sql_select_single_col($query) {
   $result = sql_select($query);
   return array_map('array_shift', $result);
 }
 
 function sql_select_single_cell($query) {
-  return array_shift(array_shift(sql_select($query)));
+  $result = sql_select($query);
+
+  $firstCell = array_shift($result);
+
+  return array_shift($firstCell);
 }
 
 ?>

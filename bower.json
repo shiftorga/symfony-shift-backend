@@ -1,0 +1,23 @@
+{
+  "name": "engelsystem",
+  "version": "0.0.1",
+  "authors": [
+    "electricmaxxx <maximilian.berghoff@mayflower.de>"
+  ],
+  "repository": "https://github.com/muccc/engelsystem.git",
+  "description": "The engelsystem is an application to display shifts for helper.",
+  "homepage": "https://github.com/muccc/engelsystem.git",
+  "license": "MIT",
+  "dependencies": {
+    "angular": "1.4.5",
+    "bootstrap": "3.3.5",
+    "angular-shift": "latest",
+    "bootstrap-multiselect": "0.9.13",
+    "icomoon": "~0.0.3"
+  },
+  "devDependencies": {
+    "countdown.js": "~1.1.0",
+    "moment-countdown": "~0.0.3",
+    "requirejs": "~2.1.22"
+  }
+}

@@ -14,7 +14,7 @@ function logout_title() {
 
 // Engel registrieren
 function guest_register() {
-  global $tshirt_sizes, $enable_tshirt_size, $default_theme;
+  global $tshirt_sizes, $enable_tshirt_size, $enable_dect, $default_theme, $genders;
   
   $msg = "";
   $nick = "";
@@ -33,7 +33,8 @@ function guest_register() {
   $password_hash = "";
   $selected_angel_types = array();
   $planned_arrival_date = null;
-  
+  $gender = "none";
+
   $angel_types_source = sql_select("SELECT * FROM `AngelTypes` ORDER BY `name`");
   $angel_types = array();
   foreach ($angel_types_source as $angel_type) {
@@ -62,9 +63,6 @@ function guest_register() {
         $ok = false;
         $msg .= error(_("E-mail address is not correct."), true);
       }
-    } else {
-      $ok = false;
-      $msg .= error(_("Please enter your e-mail."), true);
     }
     
     if (isset($_REQUEST['email_shiftinfo']))
@@ -77,16 +75,7 @@ function guest_register() {
         $msg .= error(_("Please check your jabber account information."), true);
       }
     }
-    
-    if ($enable_tshirt_size) {
-      if (isset($_REQUEST['tshirt_size']) && isset($tshirt_sizes[$_REQUEST['tshirt_size']]) && $_REQUEST['tshirt_size'] != '')
-        $tshirt_size = $_REQUEST['tshirt_size'];
-      else {
-        $ok = false;
-        $msg .= error(_("Please select your shirt size."), true);
-      }
-    }
-    
+
     if (isset($_REQUEST['password']) && strlen($_REQUEST['password']) >= MIN_PASSWORD_LENGTH) {
       if ($_REQUEST['password'] != $_REQUEST['password2']) {
         $ok = false;
@@ -101,7 +90,7 @@ function guest_register() {
       $planned_arrival_date = DateTime::createFromFormat("Y-m-d", trim($_REQUEST['planned_arrival_date']))->getTimestamp();
     } else {
       $ok = false;
-      $msg .= error(_("Please enter your planned date of arrival."), true);
+      $msg .= error(_("Please enter your planned begin of availability."), true);
     }
     
     $selected_angel_types = array();
@@ -126,7 +115,13 @@ function guest_register() {
       $hometown = strip_request_item('hometown');
     if (isset($_REQUEST['comment']))
       $comment = strip_request_item_nl('comment');
-    
+
+    if (isset($_REQUEST['gender'])
+        && array_key_exists($_REQUEST['gender'], $genders)) {
+        $gender = $_REQUEST['gender'];
+    }
+
+
     if ($ok) {
       sql_query("
           INSERT INTO `User` SET 
@@ -135,6 +130,7 @@ function guest_register() {
           `Vorname`='" . sql_escape($prename) . "', 
           `Name`='" . sql_escape($lastname) . "', 
           `Alter`='" . sql_escape($age) . "', 
+          `gender`='" . sql_escape($gender) . "',
           `Telefon`='" . sql_escape($tel) . "', 
           `DECT`='" . sql_escape($dect) . "', 
           `Handy`='" . sql_escape($mobile) . "', 
@@ -142,7 +138,7 @@ function guest_register() {
           `email_shiftinfo`=" . sql_bool($email_shiftinfo) . ", 
           `jabber`='" . sql_escape($jabber) . "',
           `Size`='" . sql_escape($tshirt_size) . "', 
-          `Passwort`='" . sql_escape($password_hash) . "', 
+          `Passwort`='" . sql_escape($password_hash) . "',
           `kommentar`='" . sql_escape($comment) . "', 
           `Hometown`='" . sql_escape($hometown) . "', 
           `CreateDate`=NOW(), 
@@ -169,7 +165,7 @@ function guest_register() {
   }
   
   return page_with_title(register_title(), array(
-      _("By completing this form you're registering as a Chaos-Angel. This script will create you an account in the angel task sheduler."),
+      _("By completing this form you're registering as an angel. This script will create you an account in the angel task sheduler."),
       $msg,
       msg(),
       form(array(
@@ -180,17 +176,13 @@ function guest_register() {
                           form_text('nick', _("Nick") . ' ' . entry_required(), $nick) 
                       )),
                       div('col-sm-8', array(
-                          form_email('mail', _("E-Mail") . ' ' . entry_required(), $mail),
-                          form_checkbox('email_shiftinfo', _("Please send me an email if my shifts change"), $email_shiftinfo) 
-                      )) 
+                          form_email('mail', _("E-Mail"), $mail),
+                                               ))
                   )),
                   div('row', array(
                       div('col-sm-6', array(
-                          form_date('planned_arrival_date', _("Planned date of arrival") . ' ' . entry_required(), $planned_arrival_date, time()) 
-                      )),
-                      div('col-sm-6', array(
-                          $enable_tshirt_size ? form_select('tshirt_size', _("Shirt size") . ' ' . entry_required(), $tshirt_sizes, $tshirt_size) : '' 
-                      )) 
+                          form_date('planned_arrival_date', _("Planned begin of availability") . ' ' . entry_required(), $planned_arrival_date, time()) 
+                      ))
                   )),
                   div('row', array(
                       div('col-sm-6', array(
@@ -206,13 +198,13 @@ function guest_register() {
               div('col-md-6', array(
                   div('row', array(
                       div('col-sm-4', array(
-                          form_text('dect', _("DECT"), $dect) 
-                      )),
-                      div('col-sm-4', array(
-                          form_text('mobile', _("Mobile"), $mobile) 
+                          form_text('mobile', _("Mobile"), $mobile)                          
                       )),
                       div('col-sm-4', array(
                           form_text('tel', _("Phone"), $tel) 
+                      )),
+                      div('col-sm-4', array(
+                          $enable_dect ? form_text('dect', _("DECT"), $dect) : ''
                       )) 
                   )),
                   form_text('jabber', _("Jabber"), $jabber),
@@ -228,10 +220,16 @@ function guest_register() {
                       div('col-sm-3', array(
                           form_text('age', _("Age"), $age) 
                       )),
-                      div('col-sm-9', array(
+                      div('col-sm-3', array(
+                          form_select('gender', _("Gender"), $genders, $gender)
+                      )),
+                      div('col-sm-6', array(
                           form_text('hometown', _("Hometown"), $hometown) 
-                      )) 
-                  )),
+                      )),
+                      div('col-sm-6', array(
+                              form_text('comment', _("additional Info(Language / Profession)"), $comment)
+                          ))
+                      )),
                   form_info(entry_required() . ' = ' . _("Entry required!")) 
               )) 
           )),
@@ -287,7 +285,7 @@ function guest_login() {
       $_SESSION['uid'] = $login_user['UID'];
       $_SESSION['locale'] = $login_user['Sprache'];
       
-      redirect(page_link_to('news'));
+      redirect(page_link_to('shifts'));
     }
   }
   

@@ -1,0 +1,32 @@
+{% extends '::base.html.twig' %}
+
+{% block content %}
+    <div class="toastr-container" id="toast-container"></div>
+
+    <div class="panel panel-default" ng-app="angularShift">
+        <div class="panel-heading">Shifts</div>
+        <div class="panel-body">
+            <div class="container" ui-view="content"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('components/angular-shift/dist/css/vendors.css') }}" />
+    <link rel="stylesheet" href="{{ asset('components/bootstrap-multiselect/dist/css/bootstrap-multiselect.css') }}" />
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript" src="{{ asset('components/countdown.js/lib/countdown.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('components/moment-countdown/dist/moment-countdown.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('components/bootstrap-multiselect/dist/js/bootstrap-multiselect.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('components/angular-shift/dist/js/vendors.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('components/angular-shift/dist/js/angular.shifts.js') }}"></script>
+{% endblock %}
+
+
+

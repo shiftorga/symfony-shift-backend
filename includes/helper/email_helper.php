@@ -15,7 +15,7 @@ function engelsystem_email_to_user($recipient_user, $title, $message, $not_if_it
 }
 
 function engelsystem_email($address, $title, $message) {
-  return mail($address, $title, $message, "Content-Type: text/plain; charset=UTF-8\r\nFrom: Engelsystem <noreply@engelsystem.de>");
+  return mail($address, $title, $message, sprintf("Content-Type: text/plain; charset=UTF-8\r\nFrom: %s", $fromMailAddress));
 }
 
 ?>
