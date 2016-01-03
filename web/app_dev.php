@@ -1,5 +1,6 @@
 <?php
 
+xdebug_start_trace('/tmp/change');
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Debug\Debug;
 
@@ -31,7 +32,6 @@ if (! isset($_REQUEST['p']) && $_SERVER['REQUEST_URI'] === '/') {
 
 if (isset($_REQUEST['p']) && preg_match("/^[a-z0-9_]*$/i", $_REQUEST['p']) && (in_array($_REQUEST['p'], $free_pages) || in_array($_REQUEST['p'], $privileges))) {
   $p = $_REQUEST['p'];
-
   $title = $p;
   $content = "";
 

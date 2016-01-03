@@ -48,7 +48,6 @@ function user_shifts() {
   elseif (isset($_REQUEST['edit_shift']) && in_array('admin_shifts', $privileges)) {
     $msg = "";
     $ok = true;
-
     if (isset($_REQUEST['edit_shift']) && test_request_int('edit_shift'))
       $shift_id = $_REQUEST['edit_shift'];
     else
@@ -335,14 +334,14 @@ function view_user_shifts() {
 
   if (count($days) == 0) {
     error(_("The administration has not configured any shifts yet."));
-    redirect('?');
+    redirect('?p=dashboard');
   }
 
   $rooms = sql_select("SELECT `RID` AS `id`, `Name` AS `name` FROM `Room` WHERE `show`='Y' ORDER BY `Name`");
 
   if (count($rooms) == 0) {
     error(_("The administration has not configured any locations yet."));
-    redirect('?');
+    redirect('?p=dashboard');
   }
 
   if (in_array('user_shifts_admin', $privileges))
